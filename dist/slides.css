@@ -1,0 +1,1456 @@
+:root {
+    --color-accent: rgb(93, 144, 210);
+    --color-accent-inverted: rgb(255 208 0);
+    --color-background-header: var(--color-accent);
+    --color-background-page: rgb(254, 247, 241);
+    --color-background-card: white;
+    --color-background-code: #f5f2f0;
+    --color-backdrop: black;
+    --color-link-inverted: var(--color-accent-inverted);
+    --color-link: var(--color-accent);
+    --color-text: rgb(51 51 51);
+    --color-text-heading: var(--color-accent);
+    --color-text-inverted: rgb(255 255 255);
+    --color-warning: #ce2929;
+    --color-error: var(--color-warning);
+
+    --font-family-display:
+        Pridi, Georgia, Cambria, "Noto Serif",
+        "Bitstream Charter", serif;
+    --font-family-body:
+        "Merriweather Sans", Calibri, Roboto, "Segoe UI",
+        Ubuntu, sans-serif;
+    --font-family-code:
+        Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+        monospace;
+
+    --font-line-height-body: 1.375;
+    --font-line-height-compact: 1.125;
+    --font-line-height-display: 1.125;
+
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --grid-columns: 12;
+
+    --weight-line-hairline: 0.5px;
+    --weight-line-fine: 1px;
+    --weight-line-medium: 2px;
+    --weight-line-heavy: 4px;
+
+    --size-spacing-small: 0.15em;
+    --size-spacing-medium: 0.25em;
+    --size-spacing-large: 0.75em;
+    --size-spacing-xlarge: 1.5em;
+
+    --slide-aspect-ratio: 1.778;
+    --slide-nominal-width: 1080;
+    --slide-nominal-height: calc(
+        var(--slide-nominal-width) /
+            calc(var(--slide-aspect-ratio))
+    );
+
+    --slide-base-measure: 36;
+    --slide-code-measure: 48;
+
+    --slide-overflow: hidden;
+
+    --box-overflow: visible;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+img {
+    max-width: 100%;
+}
+
+body {
+    line-height: var(--font-line-height-body);
+    font-family: var(--font-family-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+dt,
+summary {
+    font-family: var(--font-family-display);
+    line-height: var(--font-line-height-display);
+}
+code:not([class*="language-"]) {
+    display: inline-block;
+    font-family: var(--font-family-code);
+    font-size: 0.75em;
+    background: var(--color-background-code);
+    padding: 0.25em;
+    margin: var(--size-spacing-small);
+    border-radius: var(--size-spacing-small);
+
+    &.tree {
+        line-height: 0.9;
+        font-size: 100%;
+    }
+
+    em > & {
+        color: var(--color-accent);
+        padding-left: 0;
+        border-left: 0;
+        margin-left: -1px;
+    }
+}
+ul,
+ol {
+    padding-left: 1em;
+}
+li + li {
+    margin-top: var(--size-spacing-medium);
+}
+blockquote {
+    width: 80%;
+    margin: var(--size-spacing-large) auto;
+    border-left: var(--weight-line-heavy) solid
+        var(--color-accent);
+    padding-left: var(--size-spacing-large);
+    font-size: 125%;
+
+    .attribution {
+        display: block;
+        text-align: right;
+        margin-left: 25%;
+        font-style: italic;
+        font-size: var(--slide-base-font-size);
+    }
+
+    .compact {
+        font-size: var(--slide-base-font-size);
+    }
+}
+
+p.center,
+td.center {
+    text-align: center;
+}
+
+p.question,
+p.note {
+    text-align: center;
+    text-wrap: balance;
+    font-family: var(--font-family-display);
+
+    &::before,
+    &::after {
+        content: " ";
+        display: block;
+        margin: 0 auto;
+        width: 50%;
+        height: var(--size-spacing-large);
+    }
+    &::before {
+        border-top: var(--weight-line-hairline) solid
+            currentColor;
+    }
+    &::after {
+        border-bottom: var(--weight-line-hairline) solid
+            currentColor;
+    }
+}
+
+p.question {
+    font-size: 200%;
+}
+
+p.note {
+    font-style: italic;
+    color: var(--color-accent);
+}
+
+pre[class*="language"]:has(code.error-message),
+code.error-message[class*="language"] {
+    max-width: 100%;
+    white-space: wrap;
+    color: var(--color-error);
+}
+
+textarea {
+    font: inherit;
+}
+.nobr {
+    white-space: nowrap;
+}
+.hidden {
+    display: none;
+}
+
+details {
+    display: flex;
+    flex-direction: row;
+    align-content: baseline;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+slide-presi {
+    display: flex;
+    flex-direction: column;
+    --scale: 1;
+}
+
+
+slide-footer {
+    position: fixed;
+    z-index: 0;
+    right: var(--size-spacing-small);
+    bottom: var(--size-spacing-small);
+    left: var(--size-spacing-small);
+}
+
+slide-view {
+    --one-half: calc(var(--grid-columns, 12) / 2);
+    --one-third: calc(var(--grid-columns, 12) / 3);
+    --two-thirds: calc(2 * var(--grid-columns, 12) / 3);
+    --one-quarter: calc(var(--grid-columns, 12) / 4);
+    --three-quarters: calc(3 * var(--grid-columns, 12) / 4);
+    --one-sixth: calc(var(--grid-columns, 12) / 6);
+    --five-sixths: calc(5 * var(--grid-columns, 12) / 6);
+
+    --code-scaling: 1;
+
+    --grid-header-row: ;
+    --grid-content-rows: minmax(min-content, 1fr);
+    --grid-last-row: ;
+    --grid-template-rows: var(--grid-header-row)
+        var(--grid-content-rows) var(--grid-last-row);
+    --grid-auto-rows: minmax(min-content, auto);
+
+    display: grid;
+    aspect-ratio: var(--slide-aspect-ratio);
+    max-width: 100%;
+
+    grid-template-rows: var(--grid-template-rows);
+    grid-template-columns:
+        [start] repeat(var(--grid-columns), 1fr)
+        [end];
+    grid-auto-rows: var(--grid-auto-rows);
+    grid-auto-flow: dense;
+    gap: var(--size-spacing-medium) var(--size-spacing-large);
+
+    /* Scale the font size to match the slide size */
+
+    --slide-base-font-size: calc(
+        1px * var(--scale, 1) * var(--slide-nominal-width) /
+            var(--slide-base-measure)
+    );
+
+    font-size: var(--slide-base-font-size);
+    padding: var(--size-spacing-large);
+
+    &:has(h1:first-child) {
+        --grid-header-row: min-content;
+    }
+
+    &:has(> :is(h2, h3) + :is(ul, ol, p, pre, blockquote)) {
+        --grid-content-rows: min-content auto;
+    }
+
+    &:has(
+        > :is(:first-child:not(h1), h1 + :not(h2, h3))
+            + :is(h2, h3)
+            + :is(ul, ol, p, pre, blockquote)
+    ) {
+        --grid-content-rows: 1fr min-content auto;
+    }
+
+    > * {
+        grid-column: start/end;
+        overflow: var(--box-overflow);
+    }
+
+    > *:has(.hidden:only-child) {
+        display: none;
+    }
+
+    > h1 {
+        font-size: 175%;
+    }
+
+    > * + h1 {
+        margin-top: var(--size-spacing-xlarge);
+    }
+    > h2 {
+        font-size: 133%;
+    }
+    > h3 {
+        font-size: 125%;
+    }
+
+    pre[class*="language-"] {
+        --code-font-size: calc(
+            1px * var(--scale, 1) * var(--code-scaling) *
+                var(--slide-nominal-width) /
+                var(--slide-code-measure)
+        );
+        font-size: var(--code-font-size, 1em);
+        line-height: 1.25;
+        margin: 0;
+        padding: var(--size-spacing-small);
+        align-self: start;
+        overflow: var(--box-overflow);
+
+        > code {
+            line-height: 1;
+        }
+
+        > code.compact {
+            font-size: calc(0.75 * var(--code-font-size, 1em));
+        }
+
+        > code.tiny {
+            font-size: calc(0.625 * var(--code-font-size, 1em));
+        }
+
+        &:has(code.compact) {
+            line-height: 0.85;
+        }
+
+        &:has(code.tiny) {
+            line-height: 0.7;
+        }
+    }
+
+    > p:has(img:only-child, video:only-child) {
+        display: contents;
+
+        > img:only-child,
+        > video:only-child {
+            display: block;
+            object-fit: contain;
+            height: 100%;
+            width: 100%;
+        }
+
+        &.max25vh > img:only-child {
+            max-height: 25vh;
+        }
+    }
+
+    > :is(ul, ol) {
+        > li::marker {
+            color: var(--color-accent);
+        }
+        > li:not(:only-child) > ul {
+            font-size: 87.5%;
+        }
+        &:has(> li:only-child) {
+            list-style: none;
+            padding-left: 0;
+        }
+    }
+
+    > dl,
+    > .dl {
+        display: grid;
+        grid-template-columns: subgrid;
+        grid-auto-rows: min-content;
+        row-gap: var(--size-spacing-medium);
+
+        > :is(dt, h4) {
+            grid-column: 1 / span var(--one-quarter);
+            font-family: var(--font-family-display);
+            font-weight: bold;
+            background: white;
+        }
+        > :not(dt, h4) {
+            grid-column: span var(--three-quarters) / -1;
+        }
+
+        code.compact {
+            font-size: calc(0.75 * var(--code-font-size, 1em));
+        }
+
+        &:is(.compact, :has(dt:first-child.compact)) {
+            > :is(dt, h4) {
+                grid-column: 1 / span 2;
+            }
+            > :not(dt, h4) {
+                grid-column: 3 / -1;
+            }
+        }
+
+        &.full {
+            > :is(dt, h4) {
+                grid-column: 1 / span var(--three-quarters);
+            }
+            > :not(dt, h4) {
+                grid-column: 2 / -1;
+            }
+        }
+    }
+
+    > blockquote,
+    .question {
+        grid-column: 2 / -2;
+        align-self: center;
+    }
+
+    > textarea {
+        grid-column: 2 / -2;
+    }
+
+    > table {
+        height: fit-content;
+
+        &:has(th.compact) {
+            font-size: calc(
+                0.875 * var(--slide-base-font-size, 1em)
+            );
+            line-height: 1;
+        }
+
+        &:has(th.tiny) {
+            font-size: calc(
+                0.75 * var(--slide-base-font-size, 1em)
+            );
+            line-height: 1;
+        }
+
+        th {
+            font-family: var(--font-family-display);
+            line-height: 1.125;
+            vertical-align: bottom;
+            border-bottom: var(--weight-line-heavy) solid
+                var(--color-accent);
+            padding: 0 var(--size-spacing-small);
+        }
+
+        thead > tr:not(:has(:not(:empty))) {
+            display: none;
+        }
+
+        td {
+            font-size: 0.875em;
+            padding: var(--size-spacing-small);
+            position: relative;
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:last-child {
+                padding-right: 0;
+            }
+
+            &[colspan] {
+                border: var(--weight-line-medium) solid
+                    var(--color-accent);
+            }
+
+            &:has(img:first-child:last-child) {
+                padding: 0;
+            }
+            > img {
+                max-height: 8em;
+                display: block;
+                margin: 0 auto;
+            }
+            > textarea {
+                width: 100%;
+            }
+        }
+
+        tbody > tr > :first-child {
+            padding-left: 0;
+        }
+
+        thead tr:last-child > th {
+            border-bottom: 2px solid #333;
+        }
+    }
+
+    > p.warning,
+    > aside p.warning {
+        grid-column: start/end;
+        place-self: center;
+        width: fit-content;
+        padding: var(--size-spacing-medium);
+        border-radius: var(--size-spacing-medium);
+        border: var(--weight-line-heavy) solid
+            var(--color-warning);
+
+        &::before {
+            display: inline-block;
+            content: "!!";
+            width: 1.5em;
+            height: 1.5em;
+            line-height: 1.5em;
+            text-align: center;
+            vertical-align: baseline;
+            border-radius: 50%;
+            background: var(--color-warning);
+            color: white;
+        }
+    }
+
+    /*&:not(:first-child)::after {
+        display: block;
+        position: absolute;
+        bottom: var(--size-spacing-large);
+        right: var(--size-spacing-large);
+        content: attr(data-slide-number);
+        font-size: 0.75em;
+        color: var(--color-accent);
+    }*/
+}
+
+
+@media screen {
+    body {
+        overflow: hidden;
+    }
+
+    slide-presi {
+        --wscale: calc(
+            var(--viewport-width, 1080) /
+                var(--slide-nominal-width)
+        );
+
+        --hscale: calc(
+            var(--viewport-height, 792) /
+                var(--slide-nominal-height)
+        );
+
+        --scale: min(var(--wscale), var(--hscale));
+
+        --slide-margin-vertical: calc(
+            (
+                    var(--viewport-height) -
+                        var(--slide-nominal-height) *
+                        var(--scale, 1)
+                ) *
+                0.5px
+        );
+
+        --slide-margin-horizontal: calc(
+            (
+                    var(--viewport-width) -
+                        var(--slide-nominal-width) *
+                        var(--scale, 1)
+                ) *
+                0.5px
+        );
+        background-color: var(--color-backdrop);
+        height: 100vh;
+        width: 100vw;
+        padding: var(--slide-margin-vertical)
+            var(--slide-margin-horizontal);
+        gap: calc(2 * var(--slide-margin-vertical));
+        overflow: hidden scroll;
+        scroll-snap-type: y mandatory;
+    }
+
+    slide-view {
+        color: var(--color-text);
+        background-color: var(--color-background-page);
+        border-radius: 2vw;
+        scroll-snap-align: center;
+        position: relative;
+    }
+}
+
+
+
+@media print {
+    /*@page slide {
+        size: 14in 8.5in;
+        margin: 0.5in;
+    }*/
+
+    slide-presi {
+        --viewport-width: var(--slide-nominal-width);
+        --viewport-height: var(--slide-nominal-height);
+        --scale: 1;
+    }
+
+    slide-view {
+        page: slide;
+        page-break-before: always;
+        break-before: page;
+        border: 1px solid black;
+    }
+
+    slide-footer {
+        display: none;
+    }
+}
+
+/* implicit layouts */
+
+slide-view:not(:has(h1[layout])) {
+    --slide-header-template: /* empty */;
+    --slide-body-template: "b b b b b b b b b b b b";
+    --slide-footer-template: /* empty */;
+    --grid-template: var(--slide-header-template)
+        var(--slide-body-template) var(--slide-footer-template);
+
+    --grid-content-rows: minmax(75%, 1fr);
+
+    grid-template-areas: var(--grid-template);
+    &:has(h1:first-child) {
+        --slide-header-template: "h h h h h h h h h h h h";
+        --grid-header-row: min-content;
+    }
+
+    &:has(:is(footer, .note, .footer):last-child) {
+        --slide-footer-template: "f f f f f f f f f f f f";
+        --grid-last-row: min-content;
+    }
+
+    & > :is(h1):first-child {
+        grid-area: h;
+    }
+
+    & > :is(footer, .note, .footer):last-child {
+        grid-area: f;
+        margin: 0;
+    }
+
+    &
+        > :first-of-type:where(
+            ul,
+            ol,
+            dl,
+            table:not(:has(.full)),
+            blockquote,
+            .question,
+            p:not(
+                :has(> img:only-child),
+                .note,
+                .warning,
+                .footer
+            )
+        ) {
+        grid-area: b;
+    }
+
+    &
+        > :is(blockquote, ul, ol, dl, table):first-of-type
+        + :is(blockquote, ul, ol, dl, table) {
+        grid-area: unset;
+        grid-column: start/end;
+    }
+
+    & > p:not(.full) > img:only-child {
+        grid-area: i;
+    }
+
+    & > p:not(.full) > video:only-child {
+        grid-area: v;
+    }
+
+    & > pre:first-of-type:not(:has(.full)) {
+        grid-area: c;
+
+        &:has(code.center) {
+            justify-self: center;
+        }
+    }
+
+    /* Select a template from what the slide _has_ */
+
+    /* initial header (not h1) */
+    &:has(> header:first-child) {
+        --grid-header-row: minmax(min-content, 1fr);
+
+        > header {
+            display: grid;
+            grid-template-columns: subgrid;
+
+            > h1 {
+                grid-area: h;
+            }
+
+            > p > img:only-child {
+                grid-area: i;
+            }
+        }
+
+        /* image in the header */
+        &:has(> header:first-child > p > img:only-child) {
+            --slide-header-template: "h h h h h h i i i i i i";
+            --grid-header-row: auto;
+        }
+    }
+
+    /* initial <aside> */
+
+    &:has(
+        > aside:where(
+                first-child,
+                :is(h1, header):first-of-type + *
+            )
+    ) {
+        --slide-body-template: var(--slide-aside-template);
+        --slide-aside-template: "b b b b   b b b b   a a a a";
+
+        &:has(h1:first-child) {
+            --slide-header-template: "h h h h  h h h h   a a a a";
+        }
+
+        &:has(> aside + p > img:only-child) {
+            --slide-aside-template: "i i i i   i i i i   a a a a";
+        }
+
+        > aside {
+            grid-area: a;
+            &:has(> :only-child) {
+                display: contents;
+            }
+            > :is(
+                ul,
+                ol,
+                pre,
+                blockquote,
+                p:not(:has(> img:only-child))
+            ) {
+                grid-area: a;
+            }
+            > p:only-child > img:only-child {
+                grid-area: i;
+            }
+        }
+
+        > aside
+            + :is(
+                ul,
+                ol,
+                p:not(:has(> img:only-child)),
+                dl,
+                .dl,
+                .question
+            ) {
+            grid-area: b;
+        }
+
+        > aside + p > img:only-child {
+            grid-area: b;
+        }
+
+        &:has(aside + pre) {
+            --slide-aside-template: "c c c c   c c c c   a a a a";
+        }
+
+        /* <aside> containing image */
+        &:has(aside > p > img:only-child) {
+            --slide-aside-template: "b b b b   b b b b   i i i i"
+                "b b b b   b b b b   a a a a";
+
+            > aside:has(p:only-child > img:only-child) {
+                display: contents;
+            }
+
+            &:has(
+                :is(h1, header):first-of-type
+                    + aside
+                    > p:only-child
+                    > img:only-child
+            ) {
+                --slide-header-template: "h h h h  h h h h   i i i i";
+            }
+
+            &:has(aside + pre) {
+                --slide-aside-template: "c c c c   c c c c   a a a a";
+                --grid-content-rows: auto
+                    minmax(min-content, 1fr);
+            }
+        }
+
+        &:has(aside > p:only-child > img:only-child) {
+            --slide-aside-template: "b b b b   b b b b   i i i i";
+            &:has(aside + pre) {
+                --slide-aside-template: "c c c c   c c c c   i i i i";
+            }
+        }
+
+        /* <aside> + code */
+        &:has(aside + pre) {
+            --slide-aside-template: "c c c c   c c c c   a a a a";
+
+            &:has(aside > p:only-child > img:only-child) {
+                --slide-aside-template: "c c c c   c c c c   i i i i";
+            }
+        }
+
+        /* <aside> ~ footer */
+
+        &:has(aside ~ :is(footer, .note):last-child) {
+            --slide-footer-template: "f f f f   f f f f   a a a a";
+        }
+    }
+
+    /* initial image */
+
+    &:has(
+        > p:where(
+                :first-child,
+                :is(h1, header, aside):first-of-type + *
+            )
+            > img:only-child
+    ) {
+        --slide-body-template: "b b b b b b   i i i i i i";
+
+        &:has(
+            > p:where(
+                    :only-child,
+                    :is(h1, header):first-of-type + :last-child
+                ),
+            > p:where(
+                    :first-child,
+                    :is(h1, header):first-of-type + *
+                )
+                + p
+                > img:only-child,
+            > p:where(
+                    :first-child,
+                    :is(h1, header):first-of-type + *
+                )
+                + :is(footer, .footer, .note)
+        ) {
+            --slide-body-template: "i i i i   i i i i   i i i i";
+        }
+
+        &:has(
+            p:where(
+                    :first-child,
+                    :is(h1, header):first-of-type + *
+                )
+                + *:where(
+                    :not(
+                        h3,
+                        p,
+                        blockquote,
+                        dl,
+                        table,
+                        footer,
+                        .footer,
+                        .note
+                    )
+                )
+        ) {
+            --slide-header-template: "h h h h  h h h h  h h h h";
+            --slide-body-template: "b b b b b b   i i i i i i";
+        }
+
+        &:has(
+            p:where(
+                    :first-child,
+                    :is(h1, header):first-of-type + *
+                )
+                + *:where(ul, ol)
+                + pre
+        ) {
+            --slide-body-template: "b b b b b b   i i i i i i"
+                "c c c c   c c c c   c c c c";
+            --grid-content-rows: minmax(auto, 1fr)
+                minmax(min-content, 1fr);
+        }
+
+        &:has(
+            p:where(
+                    :first-child,
+                    :is(h1, header):first-of-type + *
+                )
+                + :where(blockquote, table, .full)
+        ) {
+            --slide-header-template: "h h h h   i i i i   i i i i";
+            --slide-body-template: "h h h h   i i i i   i i i i"
+                "b b b b   b b b b   b b b b";
+        }
+
+        &:has(
+            p:where(
+                    :first-child,
+                    :is(h1, header):first-of-type + *
+                )
+                + pre
+        ) {
+            --slide-header-template: "h h h h   i i i i   i i i i";
+            --slide-body-template: "h h h h   i i i i   i i i i"
+                "c c c c   c c c c   c c c c";
+        }
+    }
+
+    /* initial video */
+
+    &:has(
+        > p:where(
+                :first-child,
+                :is(h1, header):first-of-type + *
+            )
+            > video:only-child
+    ) {
+        --slide-body-template: "b b b b  v v v v   v v v v";
+
+        &:has(
+            p:where(
+                    :first-child,
+                    :is(h1, header):first-of-type + *
+                )
+                + pre
+        ) {
+            --slide-body-template: "c c c c c c   v v v v v v";
+        }
+    }
+
+    /* * + image */
+
+    &:has(
+        > *:where(
+                :first-child,
+                :is(h1, header):first-of-type + *
+            ):not(h1, h3, .full, table, dl, blockquote, aside)
+            + p
+            > img:only-child
+    ) {
+        --slide-body-template: "b b b b b b   i i i i i i";
+
+        /* code + image */
+        &:has(
+            pre:first-child,
+            :is(h1, header):first-of-type + pre
+        ) {
+            --slide-body-template: "c c c c c c   i i i i i i";
+
+            /* code + image + * */
+            &:has(pre + p + :is(ul, ol, dl)):has(
+                    pre + p > img:only-child
+                ) {
+                --slide-body-template: "b b b b b b   i i i i i i"
+                    "b b b b b b   c c c c c c";
+                --grid-content-rows: minmax(min-content, auto)
+                    minmax(min-content, auto);
+
+                &:has(:is(footer, .note, .footer):last-child) {
+                    --slide-footer-template: "f f f f f f   c c c c c c";
+                }
+            }
+        }
+    }
+
+    /* initial code */
+    &:has(
+        > pre:where(
+                :first-child,
+                :is(h1, header):first-of-type + *
+            )
+    ) {
+        --slide-body-template: "c c c c c c c c c c c c";
+
+        &:has(
+            pre + :is(blockquote, table, .full, .note, footer)
+        ) {
+            --slide-body-template: "c c c c c c c c c c c c"
+                "b b b b b b b b b b b b";
+            --grid-content-rows: min-content fit-content;
+        }
+    }
+
+    /* initial code + * */
+
+    &:has(
+            > pre:where(
+                    :first-child:not(h1, header),
+                    :is(h1, header):first-of-type + *
+                )
+                + *:not(h3, .full, .note, footer)
+        ):not(:has(pre > .full)) {
+        --slide-body-template: "c c c c   c c c c   b b b b";
+    }
+
+    /* * + code*/
+
+    &:has(
+            > *:where(
+                    :first-child:not(h1, header),
+                    :is(h1, header, aside):first-of-type + *
+                ):not(h3, aside, table, .full, .note, footer)
+                + pre
+        ):not(:has(pre > .full)) {
+        --slide-body-template: "b b b b   b b c c  c c c c";
+    }
+
+    /* side-by-side sections (h3) */
+
+    &:has(> h3:nth-of-type(2)) {
+        --slide-code-template: ;
+        --slide-list-template: ;
+        --slide-image-template: ;
+        --slide-titles-template: "t t t t t t   t2 t2 t2 t2 t2 t2";
+        --slide-body-template: var(--slide-titles-template)
+            var(--slide-code-template)
+            var(--slide-list-template)
+            var(--slide-image-template);
+        --grid-content-rows: min-content minmax(20%, 1fr);
+
+        &:has(
+            > h3 + p > img:only-child:not(.full),
+            > h3 + :not(h3) + p > img:only-child:not(.full),
+            > h3
+                + :not(h3)
+                + :not(h3)
+                + p
+                > img:only-child:not(.full)
+        ) {
+            --slide-image-template: "i i i i i i  i2 i2 i2 i2 i2 i2";
+        }
+
+        &:has(
+            > h3 + :is(ol, ul, table),
+            > h3 + pre + :is(ol, ul, table)
+        ) {
+            --slide-list-template: "b b b b b b b2 b2 b2 b2 b2 b2";
+        }
+
+        &:has(> h3 + pre) {
+            --slide-code-template: "c c c c c c c2 c2 c2 c2 c2 c2";
+        }
+
+        &:has(> aside ~ h3:nth-of-type(2)) {
+            --slide-titles-template: "t t t t   t2 t2 t2 t2   a a a a";
+        }
+
+        &:has(> aside ~ h3 + :is(pre, ol, ul)) {
+            --slide-list-template: "b b b b   b2 b2 b2 b2   a a a a";
+        }
+
+        > h3 {
+            justify-self: center;
+            text-align: center;
+            & + :is(ol, ul) {
+                font-size: 0.875em;
+            }
+        }
+
+        > h3:first-of-type {
+            grid-area: t;
+            &,
+            & + pre {
+                + :is(
+                    ol,
+                    ul,
+                    table,
+                    p:not(
+                        .note,
+                        .footer,
+                        :has(> img:only-child)
+                    )
+                ) {
+                    grid-area: b;
+                }
+            }
+            &,
+            &
+                + :is(
+                    ol,
+                    ul,
+                    table,
+                    p:not(:has(> img:only-child))
+                ) {
+                + pre {
+                    grid-area: c;
+                }
+            }
+        }
+
+        /* side-by-side w/images in each stack */
+
+        &:has(> h3 + * + p:not(.full) > img:only-child) {
+            --grid-content-rows: min-content auto
+                minmax(50%, 1fr);
+            --slide-image-template: "i i i i   i i i2 i2   i2 i2 i2 i2";
+        }
+        &:has(> h3 + p:not(.full) > img:only-child) {
+            --slide-image-template: "i i i i   i i i2 i2   i2 i2 i2 i2";
+        }
+        &:has(> aside ~ h3 + * + p:not(.full) > img:only-child),
+        &:has(> aside ~ h3 + p:not(.full) > img:only-child) {
+            --slide-image-template: "i i i i   i2 i2 i2 i2   a a a a";
+        }
+
+        /* code + side-by-side */
+
+        &:has(
+            > :is(pre:first-child, h1:first-child + pre) + h3
+        ) {
+            --slide-code-template: "c c c c c c c c c c c c";
+            --grid-content-rows: min-content min-content
+                minmax(50%, 1fr);
+        }
+
+        /* image + side-by-side */
+
+        &:has(
+            > p:where(
+                    :first-child,
+                    :is(h1, header):first-of-type + *
+                )
+                > img:only-child
+        ) {
+            --slide-header-template: "h h h h   i i i i   i i i i";
+        }
+
+        /* extra stuff after side-by-side */
+
+        > h3
+            + *
+            + :first-of-type:is(
+                blockquote,
+                ul,
+                ol,
+                dl,
+                table,
+                .question,
+                .full
+            ) {
+            grid-area: unset;
+            grid-column: start/end;
+        }
+    }
+
+    > h3:nth-of-type(2) {
+        grid-area: t2;
+        &,
+        & + pre {
+            + :is(
+                ol,
+                ul,
+                table,
+                p:not(.note, .footer, :has(> img:only-child))
+            ) {
+                grid-area: b2;
+            }
+        }
+        &,
+        & + :is(ol, ul, table, p:not(:has(> img:only-child))) {
+            + pre {
+                grid-area: c2;
+            }
+        }
+        & + p,
+        & + :not(h3) + p,
+        & + :not(h3) + :not(h3) + p {
+            &:not(.full) > img:only-child {
+                grid-area: i2;
+            }
+        }
+    }
+
+    /* side-by-side-by-side (one row) */
+
+    &:has(h3:nth-of-type(3)) {
+        --slide-body-template: "t t t t    t2 t2 t2 t2    t3 t3 t3 t3"
+            var(--slide-code-template)
+            var(--slide-list-template)
+            var(--slide-image-template);
+        &:has(
+            > h3 + p:not(.full) > img:only-child,
+            > h3 + :not(h3) + p:not(.full) > img:only-child,
+            > h3
+                + :not(h3)
+                + :not(h3)
+                + p:not(.full)
+                > img:only-child
+        ) {
+            --slide-image-template: "i i i i   i2 i2 i2 i2   i3 i3 i3 i3";
+        }
+
+        &:has(
+            > h3 + :is(ol, ul, table),
+            > h3 + pre + :is(ol, ul, table)
+        ) {
+            --slide-list-template: "b b b b   b2 b2 b2 b2   b3 b3 b3 b3";
+        }
+
+        &:has(> h3 + pre) {
+            --slide-code-template: "c c c c   c2 c2 c2 c2   c3 c3 c3 c3";
+        }
+    }
+
+    > h3:nth-of-type(3) {
+        grid-area: t3;
+        &,
+        & + pre {
+            + :is(
+                ol,
+                ul,
+                table,
+                p:not(.note, .footer, :has(> img:only-child))
+            ) {
+                grid-area: b3;
+            }
+        }
+        &,
+        & + :is(ol, ul, table, p:not(:has(> img:only-child))) {
+            + pre {
+                grid-area: c3;
+            }
+        }
+        & + p,
+        & + :not(h3) + p,
+        & + :not(h3) + :not(h3) + p {
+            &:not(.full) > img:only-child {
+                grid-area: i3;
+            }
+        }
+    }
+
+    /* side-by-side-by-side-by-side (two rows) */
+
+    &:has(h3:nth-of-type(4)) {
+        --slide-list-template-2: ;
+        --slide-code-template-2: ;
+        --slide-image-template-2: ;
+        --slide-body-template: "t t t t t t    t2 t2 t2 t2 t2 t2"
+            var(--slide-code-template)
+            var(--slide-list-template)
+            var(--slide-image-template)
+            "t3 t3 t3 t3 t3 t3   t4 t4 t4 t4 t4 t4"
+            var(--slide-code-template-2)
+            var(--slide-list-template-2)
+            var(--slide-image-template-2);
+        --grid-content-rows: min-content minmax(0, 1fr)
+            min-content minmax(0, 1fr);
+
+        &:has(
+            > h3 + p > img:only-child:not(.full),
+            > h3 + :not(h3) + p > img:only-child:not(.full),
+            > h3
+                + :not(h3)
+                + :not(h3)
+                + p
+                > img:only-child:not(.full)
+        ) {
+            --slide-image-template: "i i i i i i    i2 i2 i2 i2 i2 i2";
+            --slide-image-template-2: "i3 i3 i3 i3 i3 i3   i4 i4 i4 i4 i4 i4";
+        }
+
+        &:has(
+            > h3 + :is(ol, ul, table),
+            > h3 + pre + :is(ol, ul, table)
+        ) {
+            --slide-list-template: "b b b b b b    b2 b2 b2 b2 b2 b2";
+            --slide-list-template-2: "b3 b3 b3 b3 b3 b3   b4 b4 b4 b4 b4 b4";
+        }
+
+        &:has(> h3 + pre) {
+            --slide-code-template: "c c c c c c  c2 c2 c2 c2 c2 c2";
+            --slide-code-template-2: "c3 c3 c3 c3 c3 c3   c4 c4 c4 c4 c4 c4";
+        }
+
+        &:has(> h3 + * + p > img:only-child) {
+            --grid-content-rows: min-content auto
+                minmax(8em, 1fr) min-content auto
+                minmax(8em, 1fr);
+        }
+    }
+
+    > h3:nth-of-type(4) {
+        grid-area: t4;
+        &,
+        & + pre {
+            + :is(
+                ol,
+                ul,
+                table,
+                p:not(.note, .footer, :has(> img:only-child))
+            ) {
+                grid-area: b4;
+            }
+        }
+        &,
+        & + :is(ol, ul, table, p:not(:has(> img:only-child))) {
+            + pre {
+                grid-area: c4;
+            }
+        }
+        & + p,
+        & + :not(h3) + p,
+        & + :not(h3) + :not(h3) + p {
+            &:not(.full) > img:only-child {
+                grid-area: i4;
+            }
+        }
+    }
+
+    &:has(h3:nth-of-type(5)) {
+        --slide-body-template: "t t t t t t  t2 t2 t2 t2 t2 t2"
+            var(--slide-code-template)
+            var(--slide-list-template)
+            var(--slide-image-template)
+            "t3 t3 t3 t3   t4 t4 t4 t4    t5 t5 t5 t5"
+            var(--slide-code-template-2)
+            var(--slide-list-template-2)
+            var(--slide-image-template-2);
+
+        &:has(
+            > h3 + p > img:only-child:not(.full),
+            > h3 + :not(h3) + p > img:only-child:not(.full),
+            > h3
+                + :not(h3)
+                + :not(h3)
+                + p
+                > img:only-child:not(.full)
+        ) {
+            --slide-image-template: "i i i i i i    i2 i2 i2 i2 i2 i2";
+            --slide-image-template-2: "i3 i3 i3 i3   i4 i4 i4 i4   i5 i5 i5 i5";
+        }
+
+        &:has(
+            > h3 + :is(ol, ul, table),
+            > h3 + pre + :is(ol, ul, table)
+        ) {
+            --slide-list-template: "b b b b b b    b2 b2 b2 b2 b2 b2";
+            --slide-list-template-2: "b3 b3 b3 b3   b4 b4 b4 b4   b5 b5 b5 b5";
+        }
+
+        &:has(> h3 + pre) {
+            --slide-code-template: "c c c c c c  c2 c2 c2 c2 c2 c2";
+            --slide-code-template-2: "c3 c3 c3 c3     c4 c4 c4 c4   c5 c5 c5 c5";
+        }
+    }
+
+    > h3:nth-of-type(5) {
+        grid-area: t5;
+        &,
+        & + pre {
+            + :is(
+                ol,
+                ul,
+                table,
+                p:not(.note, .footer, :has(> img:only-child))
+            ) {
+                grid-area: b5;
+            }
+        }
+        &,
+        & + :is(ol, ul, table, p:not(:has(> img:only-child))) {
+            + pre {
+                grid-area: c5;
+            }
+        }
+        & + p,
+        & + :not(h3) + p,
+        & + :not(h3) + :not(h3) + p {
+            &:not(.full) > img:only-child {
+                grid-area: i5;
+            }
+        }
+    }
+
+    &:has(h3:nth-of-type(6)) {
+        --slide-body-template: "t t t t   t2 t2 t2 t2   t3 t3 t3 t3"
+            var(--slide-code-template)
+            var(--slide-list-template)
+            var(--slide-image-template)
+            "t4 t4 t4 t4   t5 t5 t5 t5   t6 t6 t6 t6"
+            var(--slide-code-template-2)
+            var(--slide-list-template-2)
+            var(--slide-image-template-2);
+
+        &:has(
+            > h3 + p:not(.full) > img:only-child,
+            > h3 + :not(h3) + p:not(.full) > img:only-child,
+            > h3
+                + :not(h3)
+                + :not(h3)
+                + p:not(.full)
+                > img:only-child
+        ) {
+            --slide-image-template: "i i i i   i2 i2 i2 i2  i3 i3 i3 i3 ";
+            --slide-image-template-2: "i4 i4 i4 i4   i5 i5 i5 i5   i6 i6 i6 i6";
+        }
+
+        &:has(
+            > h3 + :is(ol, ul, table),
+            > h3 + pre + :is(ol, ul, table)
+        ) {
+            --slide-list-template: "b b b b   b2 b2 b2 b2   b3 b3 b3 b3";
+            --slide-list-template-2: "b4 b4 b4 b4   b5 b5 b5 b5   b6 b6 b6 b6";
+        }
+
+        &:has(> h3 + pre) {
+            --slide-code-template: "c c c c   c2 c2 c2 c2   c3 c3 c3 c3";
+            --slide-code-template-2: "c4 c4 c4 c4   c5 c5 c5 c5   c6 c6 c6 c6";
+        }
+        > h3:nth-of-type(6) {
+            grid-area: t6;
+            &,
+            & + pre {
+                + :is(
+                    ol,
+                    ul,
+                    table,
+                    p:not(
+                        .note,
+                        .footer,
+                        :has(> img:only-child)
+                    )
+                ) {
+                    grid-area: b6;
+                }
+            }
+            &,
+            &
+                + :is(
+                    ol,
+                    ul,
+                    table,
+                    p:not(:has(> img:only-child))
+                ) {
+                + pre {
+                    grid-area: c6;
+                }
+            }
+            & + p,
+            & + :not(h3) + p,
+            & + :not(h3) + :not(h3) + p {
+                &:not(.full) > img:only-child {
+                    grid-area: i6;
+                }
+            }
+        }
+    }
+
+    /* * + question */
+
+    &:has(:is(p, ul, ol) + .question) {
+        --slide-body-template: "b b b b b b   q q q q q q";
+
+        > :is(p, ul, ol) {
+            grid-area: b;
+        }
+        > .question {
+            grid-area: q;
+        }
+    }
+}
+
+/* explicit layouts */
+
+/* layout: title */
+
+slide-view:has(h1[layout="title"]) {
+    grid-template-rows: 50%;
+    grid-auto-rows: auto;
+
+    > h1 {
+        align-self: end;
+    }
+}

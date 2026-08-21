@@ -1,0 +1,19 @@
+# Dependency directories
+node_modules/
+
+# Macos
+.DS_Store
+
+# dotenv environment variable files
+.env
+.env.*
+!.env.example
+
+# Eleventy output
+/site
+/static
+
+# IDE/Editor Config files
+/.idea
+/.nova
+/.zed

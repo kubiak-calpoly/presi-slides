@@ -1,0 +1,38 @@
+{
+  "name": "presi-slides",
+  "version": "1.0.0",
+  "description": "Make slides with Markdown",
+  "keywords": [
+    "Presentation",
+    "Slides",
+    "Markdown"
+  ],
+  "homepage": "https://github.com/kubiak-calpoly/presi-slides#readme",
+  "bugs": {
+    "url": "https://github.com/kubiak-calpoly/presi-slides/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kubiak-calpoly/presi-slides.git"
+  },
+  "license": "BSD-3-Clause",
+  "author": "kubiak@calpoly.edu",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "vite build",
+    "dev": "npx @11ty/eleventy --serve",
+    "serve": "npx http-server ./dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@unbndl/html": "^1.0.7",
+    "jsdom": "^29.1.1",
+    "konva": "^10.3.1",
+    "vite": "^8.2.2"
+  },
+  "devDependencies": {
+     "@11ty/eleventy": "^3.1.5",
+    "http-server": "^14.1.1"
+  }
+}

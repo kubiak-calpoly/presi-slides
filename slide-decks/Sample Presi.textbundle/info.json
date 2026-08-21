@@ -1,0 +1,10 @@
+{
+  "creatorIdentifier" : "net.shinyfrog.bear",
+  "net.shinyfrog.bear" : {
+    "bear-note-unique-identifier" : "F0C44A09-49A8-4C1D-8255-7B75118A4153",
+    "version" : "2.0"
+  },
+  "transient" : false,
+  "type" : "net.daringfireball.markdown",
+  "version" : 2
+}
