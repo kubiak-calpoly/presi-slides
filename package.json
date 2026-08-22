@@ -18,7 +18,7 @@
   "license": "BSD-3-Clause",
   "author": "kubiak@calpoly.edu",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/presi-slides.js",
   "scripts": {
     "build": "vite build",
     "dev": "npx @11ty/eleventy --serve",
