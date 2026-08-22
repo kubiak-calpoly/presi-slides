@@ -1,6 +1,6 @@
 {
   "name": "presi-slides",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Make slides with Markdown",
   "keywords": [
     "Presentation",
@@ -19,6 +19,11 @@
   "author": "kubiak@calpoly.edu",
   "type": "module",
   "main": "dist/presi-slides.js",
+  "exports": {
+    "./11ty": {
+      "import": "./src/11ty-transform.js"
+    }
+  },
   "scripts": {
     "build": "vite build",
     "dev": "npx @11ty/eleventy --serve",

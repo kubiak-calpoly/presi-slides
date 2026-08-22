@@ -24,19 +24,17 @@ export class SlideElement extends HTMLElement {
       }
       :host([active]) {
         --slide-opacity: 1;
-      }
-      :host([overlay]) {
-          cursor: pointer;
+        cursor: url("/dist/images/pointer.png") 0 0, pointer;
       }
       :host([overlay="hidden"]) {
         --slide-overlay-visibility: hidden;
       }
       :host([overlay="brush"]) {
-          cursor: url("/includes/pencil.png") 0 100, crosshair;
+          cursor: url("/dist/images/pencil.png") 0 100, crosshair;
         --slide-pointer-events: auto;
       }
       :host([overlay="eraser"]) {
-          cursor: not-allowed;
+          cursor: url("/dist/images/eraser.png") 35 100, not-allowed;
         --slide-pointer-events: auto;
       }
       #overlay {
@@ -106,7 +104,7 @@ export class SlideElement extends HTMLElement {
       console.log("touchstart", pos);
       this.lastLine = new Konva.Line({
         stroke: this.overlayColor,
-        strokeWidth: this.overlayMode === "eraser" ? 10 : 4,
+        strokeWidth: this.overlayMode === "eraser" ? 20 : 4,
         globalCompositeOperation:
           this.overlayMode === "brush"
             ? "source-over"

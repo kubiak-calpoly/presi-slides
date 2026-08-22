@@ -7,19 +7,19 @@ export class FooterElement extends HTMLElement {
         <fieldset name="overlay">
             <label>
                 <input type="radio" name="overlay" value="pointer" checked>
-                <span>Select</span>
+                <img src="/dist/images/pointer.png" alt="Pointer"
             </label>
             <label>
                 <input type="radio" name="overlay" value="brush">
-                <span>Brush</span>
+                <img src="/dist/images/pencil.png" alt="Draw">
             </label>
             <label>
                 <input type="radio" name="overlay" value="eraser">
-                <span>Eraser</span>
+                <img src="/dist/images/eraser.png" alt="Erase">
             </label>
             <label>
                 <input type="radio" name="overlay" value="hidden">
-                <span>Hide</span>
+                <img src="/dist/images/hide.png" alt="Hide">
             </label>
         </fieldset>
         <span>
@@ -35,15 +35,18 @@ export class FooterElement extends HTMLElement {
     footer {
       display: flex;
       justify-content: space-between;
+      align-items: baseline;
       color: var(--color-text-inverted);
+    }
+    fieldset {
+        border: none;
     }
     span {
       background: rgb(0 0 0 / 0.8);
       border-radius: var(--size-spacing-small);
       padding: var(--size-spacing-small);
     }
-    input,
-    select {
+    input {
       font: inherit;
       color: inherit;
       line-height: inherit;
@@ -53,6 +56,19 @@ export class FooterElement extends HTMLElement {
     }
     input[type="number"] {
       width: 3em;
+    }
+    input[type="radio"] {
+      display: none;
+    }
+    img {
+      height: 2em;
+      aspect-ratio: 1;
+      opacity: .75;
+    }
+    img:hover,
+    input:checked + img {
+      opacity: 1;
+      background-color: rgb(255 255 255 / 0.2);
     }
   `;
 

@@ -4,19 +4,19 @@ var e=class extends CustomEvent{constructor(e,t){super(e,{bubbles:!0,cancelable:
         <fieldset name="overlay">
             <label>
                 <input type="radio" name="overlay" value="pointer" checked>
-                <span>Select</span>
+                <img src="/dist/images/pointer.png" alt="Pointer"
             </label>
             <label>
                 <input type="radio" name="overlay" value="brush">
-                <span>Brush</span>
+                <img src="/dist/images/pencil.png" alt="Draw">
             </label>
             <label>
                 <input type="radio" name="overlay" value="eraser">
-                <span>Eraser</span>
+                <img src="/dist/images/eraser.png" alt="Erase">
             </label>
             <label>
                 <input type="radio" name="overlay" value="hidden">
-                <span>Hide</span>
+                <img src="/dist/images/hide.png" alt="Hide">
             </label>
         </fieldset>
         <span>
@@ -30,15 +30,18 @@ var e=class extends CustomEvent{constructor(e,t){super(e,{bubbles:!0,cancelable:
     footer {
       display: flex;
       justify-content: space-between;
+      align-items: baseline;
       color: var(--color-text-inverted);
+    }
+    fieldset {
+        border: none;
     }
     span {
       background: rgb(0 0 0 / 0.8);
       border-radius: var(--size-spacing-small);
       padding: var(--size-spacing-small);
     }
-    input,
-    select {
+    input {
       font: inherit;
       color: inherit;
       line-height: inherit;
@@ -48,6 +51,19 @@ var e=class extends CustomEvent{constructor(e,t){super(e,{bubbles:!0,cancelable:
     }
     input[type="number"] {
       width: 3em;
+    }
+    input[type="radio"] {
+      display: none;
+    }
+    img {
+      height: 2em;
+      aspect-ratio: 1;
+      opacity: .75;
+    }
+    img:hover,
+    input:checked + img {
+      opacity: 1;
+      background-color: rgb(255 255 255 / 0.2);
     }
   `;slideControl=null;overlayControl=null;constructor(){super(),ne(this).template(e.template).styles(e.styles).delegate(`input[name="slide"]`,{input:e=>this.relay(`slide:input`,{slide:e.target.value})}).delegate(`input[name="overlay"]`,{change:e=>this.relay(`slide:overlay`,{overlay:e.target.value})}),this.slideControl=this.shadowRoot.querySelector(`input[name="slide"]`),this.overlayControl=this.shadowRoot.querySelector(`fieldset[name="overlay"]`)}static observedAttributes=[`slide`,`overlay`,`color`];attributeChangedCallback(e,t,n){switch(e){case`slide`:this.slideControl.value=n;break;case`overlay`:{let e=this.overlayControl.querySelector(`input[value="${n}"]`);e&&(e.checked=!0);break}}}relay(e,t){let n=new CustomEvent(e,{bubbles:!0,composed:!0,detail:t});this.dispatchEvent(n)}},E=Math.PI/180;function re(){return typeof window<`u`&&({}.toString.call(window)===`[object Window]`||{}.toString.call(window)===`[object global]`)}var D=typeof global<`u`?global:typeof window<`u`?window:typeof WorkerGlobalScope<`u`?self:{},O={_global:D,version:`10.3.1`,isBrowser:re(),isUnminified:/param/.test(function(e){}.toString()),dblClickWindow:400,getAngle(e){return O.angleDeg?e*E:e},enableTrace:!1,pointerEventsEnabled:!0,autoDrawEnabled:!0,hitOnDragEnabled:!1,capturePointerEventsEnabled:!1,_mouseListenClick:!1,_touchListenClick:!1,_pointerListenClick:!1,_mouseInDblClickWindow:!1,_touchInDblClickWindow:!1,_pointerInDblClickWindow:!1,_mouseDblClickPointerId:null,_touchDblClickPointerId:null,_pointerDblClickPointerId:null,_renderBackend:`web`,legacyTextRendering:!1,pixelRatio:typeof window<`u`&&window.devicePixelRatio||1,dragDistance:3,angleDeg:!0,showWarnings:!0,dragButtons:[0,1],isDragging(){return O.DD.isDragging},isTransforming(){return O.Transformer?.isTransforming()??!1},isDragReady(){return!!O.DD.node},releaseCanvasOnDestroy:!0,document:D.document,_injectGlobal(e){D.Konva!==void 0&&console.error(`Several Konva instances detected. It is not recommended to use multiple Konva instances in the same environment.`),D.Konva=e}},k=e=>{O[e.prototype.getClassName()]=e};O._injectGlobal(O);var A=`Konva.js unsupported environment.
 
@@ -82,19 +98,17 @@ js: import "konva/skia-backend";
       }
       :host([active]) {
         --slide-opacity: 1;
-      }
-      :host([overlay]) {
-          cursor: pointer;
+        cursor: url("/dist/images/pointer.png") 0 0, pointer;
       }
       :host([overlay="hidden"]) {
         --slide-overlay-visibility: hidden;
       }
       :host([overlay="brush"]) {
-          cursor: url("/includes/pencil.png") 0 100, crosshair;
+          cursor: url("/dist/images/pencil.png") 0 100, crosshair;
         --slide-pointer-events: auto;
       }
       :host([overlay="eraser"]) {
-          cursor: not-allowed;
+          cursor: url("/dist/images/eraser.png") 50 100, not-allowed;
         --slide-pointer-events: auto;
       }
       #overlay {
@@ -108,4 +122,4 @@ js: import "konva/skia-backend";
         transition: opacity 1s;
       }
     }
-  `;isPaint=!1;overlayMode=`pointer`;overlayColor=`red`;stage=null;constructor(){super(),ne(this).template(e.template).styles(e.styles)}static observedAttributes=[`active`,`overlay`];attributeChangedCallback(e,t,n){switch(e){case`overlay`:this.overlayMode=n,this.createOverlay();break;case`color`:this.overlayColor=n}}disconnectedCallback(){this.stage&&delete this.stage}createOverlay(){if(this.stage)return;let e=this.shadowRoot.getElementById(`overlay`);console.log(`Creating overlay if needed`,this.stage),this.stage=new ua.Stage({container:e,width:e?.clientWidth,height:e?.clientHeight}),this.layer=new ua.Layer,this.stage.add(this.layer),this.stage.on(`mousedown touchstart`,e=>{this.isPaint=!0;let t=this.stage.getPointerPosition();console.log(`touchstart`,t),this.lastLine=new ua.Line({stroke:this.overlayColor,strokeWidth:this.overlayMode===`eraser`?10:4,globalCompositeOperation:this.overlayMode===`brush`?`source-over`:`destination-out`,lineCap:`round`,lineJoin:`round`,points:[t.x,t.y,t.x,t.y]}),this.layer.add(this.lastLine)}),this.stage.on(`mouseup touchend`,()=>{this.isPaint=!1,console.log(`touchend`)}),this.stage.on(`mousemove touchmove`,e=>{if(!this.isPaint)return;e.evt.preventDefault();let t=this.stage.getPointerPosition(),n=this.lastLine.points().concat([t.x,t.y]);this.lastLine.points(n)})}},fa=.4,pa=.8,ma=class extends HTMLElement{VIEW_ELEMENT=`slide-view`;FOOTER_ELEMENT=`slide-footer`;controls=null;active=null;observer=new IntersectionObserver(e=>{let t=0,n=null;e.forEach(e=>{if(e.isIntersecting){let r=e.target;e.intersectionRatio<fa?r.removeAttribute(`active`):e.intersectionRatio>t&&(t=e.intersectionRatio,n=r)}}),n&&n!==this.active&&this.setActiveSlide(n)},{threshold:[0,fa,pa,1],delay:300});constructor(){super(),this.addEventListener(`slide:input`,e=>{let{slide:t}=e.detail,n=this.slide(t);this.setActiveSlide(n),this.jumpToSlide(n)}),this.addEventListener(`slide:overlay`,e=>{this.manageOverlay(e.detail)})}slide(e){return Array.from(this.querySelectorAll(this.VIEW_ELEMENT))[e-1]}connectedCallback(){let e=Array.from(this.querySelectorAll(this.VIEW_ELEMENT));this.controls=this.querySelector(this.FOOTER_ELEMENT),e.forEach(e=>this.observer.observe(e))}gotoSlide(e){console.log(`Going to slide`,e),e&&e.scrollIntoView({behavior:`smooth`,block:`center`,inline:`nearest`})}jumpToSlide(e){e&&e.scrollIntoView({block:`center`,inline:`nearest`})}setActiveSlide(e){if(this.active=e,this.active){this.active.setAttribute(`active`,`active`);let t=Array.from(this.querySelectorAll(this.VIEW_ELEMENT)).findIndex(t=>t===e);this.controls&&(this.controls.setAttribute(`slide`,t+1),this.controls.setAttribute(`overlay`,e.getAttribute(`overlay`)||`pointer`))}}manageOverlay(e){let{overlay:t}=e||{};console.log(`Overlay options`,e),this.active&&t&&this.active.setAttribute(`overlay`,t)}};function ha(){window.addEventListener(`resize`,ga),ga()}function ga(){let e=document.body,t=document.documentElement.clientWidth,n=document.documentElement.clientHeight;e.classList.add(`presentation-scaled`),e.style.setProperty(`--viewport-width`,t.toString()),e.style.setProperty(`--viewport-height`,n.toString()),console.log(`Rescaled`,t,n)}c({"slide-presi":ma,"slide-view":da,"slide-footer":T}),ha();
+  `;isPaint=!1;overlayMode=`pointer`;overlayColor=`red`;stage=null;constructor(){super(),ne(this).template(e.template).styles(e.styles)}static observedAttributes=[`active`,`overlay`];attributeChangedCallback(e,t,n){switch(e){case`overlay`:this.overlayMode=n,this.createOverlay();break;case`color`:this.overlayColor=n}}disconnectedCallback(){this.stage&&delete this.stage}createOverlay(){if(this.stage)return;let e=this.shadowRoot.getElementById(`overlay`);console.log(`Creating overlay if needed`,this.stage),this.stage=new ua.Stage({container:e,width:e?.clientWidth,height:e?.clientHeight}),this.layer=new ua.Layer,this.stage.add(this.layer),this.stage.on(`mousedown touchstart`,e=>{this.isPaint=!0;let t=this.stage.getPointerPosition();console.log(`touchstart`,t),this.lastLine=new ua.Line({stroke:this.overlayColor,strokeWidth:this.overlayMode===`eraser`?20:4,globalCompositeOperation:this.overlayMode===`brush`?`source-over`:`destination-out`,lineCap:`round`,lineJoin:`round`,points:[t.x,t.y,t.x,t.y]}),this.layer.add(this.lastLine)}),this.stage.on(`mouseup touchend`,()=>{this.isPaint=!1,console.log(`touchend`)}),this.stage.on(`mousemove touchmove`,e=>{if(!this.isPaint)return;e.evt.preventDefault();let t=this.stage.getPointerPosition(),n=this.lastLine.points().concat([t.x,t.y]);this.lastLine.points(n)})}},fa=.4,pa=.8,ma=class extends HTMLElement{VIEW_ELEMENT=`slide-view`;FOOTER_ELEMENT=`slide-footer`;controls=null;active=null;observer=new IntersectionObserver(e=>{let t=0,n=null;e.forEach(e=>{if(e.isIntersecting){let r=e.target;e.intersectionRatio<fa?r.removeAttribute(`active`):e.intersectionRatio>t&&(t=e.intersectionRatio,n=r)}}),n&&n!==this.active&&this.setActiveSlide(n)},{threshold:[0,fa,pa,1],delay:300});constructor(){super(),this.addEventListener(`slide:input`,e=>{let{slide:t}=e.detail,n=this.slide(t);this.setActiveSlide(n),this.jumpToSlide(n)}),this.addEventListener(`slide:overlay`,e=>{this.manageOverlay(e.detail)})}slide(e){return Array.from(this.querySelectorAll(this.VIEW_ELEMENT))[e-1]}connectedCallback(){let e=Array.from(this.querySelectorAll(this.VIEW_ELEMENT));this.controls=this.querySelector(this.FOOTER_ELEMENT),e.forEach(e=>this.observer.observe(e))}gotoSlide(e){console.log(`Going to slide`,e),e&&e.scrollIntoView({behavior:`smooth`,block:`center`,inline:`nearest`})}jumpToSlide(e){e&&e.scrollIntoView({block:`center`,inline:`nearest`})}setActiveSlide(e){if(this.active=e,this.active){this.active.setAttribute(`active`,`active`);let t=Array.from(this.querySelectorAll(this.VIEW_ELEMENT)).findIndex(t=>t===e);this.controls&&(this.controls.setAttribute(`slide`,t+1),this.controls.setAttribute(`overlay`,e.getAttribute(`overlay`)||`pointer`))}}manageOverlay(e){let{overlay:t}=e||{};console.log(`Overlay options`,e),this.active&&t&&this.active.setAttribute(`overlay`,t)}};function ha(){window.addEventListener(`resize`,ga),ga()}function ga(){let e=document.body,t=document.documentElement.clientWidth,n=document.documentElement.clientHeight;e.classList.add(`presentation-scaled`),e.style.setProperty(`--viewport-width`,t.toString()),e.style.setProperty(`--viewport-height`,n.toString()),console.log(`Rescaled`,t,n)}c({"slide-presi":ma,"slide-view":da,"slide-footer":T}),ha();

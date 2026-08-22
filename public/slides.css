@@ -10,7 +10,7 @@
     --color-link: var(--color-accent);
     --color-text: rgb(51 51 51);
     --color-text-heading: var(--color-accent);
-    --color-text-inverted: rgb(255 255 255);
+    --color-text-inverted:#12B0FB;
     --color-warning: #ce2929;
     --color-error: var(--color-warning);
 

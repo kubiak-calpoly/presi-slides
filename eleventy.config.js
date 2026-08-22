@@ -1,5 +1,5 @@
 import { HtmlBasePlugin } from "@11ty/eleventy";
-import slideTransform from "./transforms/slides.js";
+import slideTransform from "./src/11ty-transform.js";
 
 const output = process.env.STATIC || "static";
 

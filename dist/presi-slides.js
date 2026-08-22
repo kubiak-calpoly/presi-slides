@@ -434,19 +434,19 @@ var T = class e extends HTMLElement {
         <fieldset name="overlay">
             <label>
                 <input type="radio" name="overlay" value="pointer" checked>
-                <span>Select</span>
+                <img src="/dist/images/pointer.png" alt="Pointer"
             </label>
             <label>
                 <input type="radio" name="overlay" value="brush">
-                <span>Brush</span>
+                <img src="/dist/images/pencil.png" alt="Draw">
             </label>
             <label>
                 <input type="radio" name="overlay" value="eraser">
-                <span>Eraser</span>
+                <img src="/dist/images/eraser.png" alt="Erase">
             </label>
             <label>
                 <input type="radio" name="overlay" value="hidden">
-                <span>Hide</span>
+                <img src="/dist/images/hide.png" alt="Hide">
             </label>
         </fieldset>
         <span>
@@ -461,15 +461,18 @@ var T = class e extends HTMLElement {
     footer {
       display: flex;
       justify-content: space-between;
+      align-items: baseline;
       color: var(--color-text-inverted);
+    }
+    fieldset {
+        border: none;
     }
     span {
       background: rgb(0 0 0 / 0.8);
       border-radius: var(--size-spacing-small);
       padding: var(--size-spacing-small);
     }
-    input,
-    select {
+    input {
       font: inherit;
       color: inherit;
       line-height: inherit;
@@ -479,6 +482,19 @@ var T = class e extends HTMLElement {
     }
     input[type="number"] {
       width: 3em;
+    }
+    input[type="radio"] {
+      display: none;
+    }
+    img {
+      height: 2em;
+      aspect-ratio: 1;
+      opacity: .75;
+    }
+    img:hover,
+    input:checked + img {
+      opacity: 1;
+      background-color: rgb(255 255 255 / 0.2);
     }
   `;
 	slideControl = null;
@@ -8381,19 +8397,17 @@ var ua = $n.Util._assign($n, {
       }
       :host([active]) {
         --slide-opacity: 1;
-      }
-      :host([overlay]) {
-          cursor: pointer;
+        cursor: url("/dist/images/pointer.png") 0 0, pointer;
       }
       :host([overlay="hidden"]) {
         --slide-overlay-visibility: hidden;
       }
       :host([overlay="brush"]) {
-          cursor: url("/includes/pencil.png") 0 100, crosshair;
+          cursor: url("/dist/images/pencil.png") 0 100, crosshair;
         --slide-pointer-events: auto;
       }
       :host([overlay="eraser"]) {
-          cursor: not-allowed;
+          cursor: url("/dist/images/eraser.png") 50 100, not-allowed;
         --slide-pointer-events: auto;
       }
       #overlay {
@@ -8439,7 +8453,7 @@ var ua = $n.Util._assign($n, {
 			let t = this.stage.getPointerPosition();
 			console.log("touchstart", t), this.lastLine = new ua.Line({
 				stroke: this.overlayColor,
-				strokeWidth: this.overlayMode === "eraser" ? 10 : 4,
+				strokeWidth: this.overlayMode === "eraser" ? 20 : 4,
 				globalCompositeOperation: this.overlayMode === "brush" ? "source-over" : "destination-out",
 				lineCap: "round",
 				lineJoin: "round",
