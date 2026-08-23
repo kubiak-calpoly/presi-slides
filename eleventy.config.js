@@ -1,4 +1,5 @@
 import { HtmlBasePlugin } from "@11ty/eleventy";
+import htex from "htex/eleventy";
 import slideTransform from "./src/11ty-transform.js";
 
 const output = process.env.STATIC || "static";
@@ -10,9 +11,10 @@ export default async function (eleventyConfig) {
     "slide-decks/**/assets/*"
   );
   // make dist available from client
-  eleventyConfig.addPassthroughCopy("dist");
+  eleventyConfig.addPassthroughCopy("includes");
 
   eleventyConfig.addPlugin(HtmlBasePlugin);
+  eleventyConfig.addPlugin(htex, {});
 
   eleventyConfig.addTransform("slide", slideTransform);
 
@@ -41,7 +43,7 @@ export default async function (eleventyConfig) {
     dir: {
       input: "slide-decks/",
       output: output,
-      includes: "../dist",
+      includes: "../includes",
       layouts: "../layouts"
     }
   };

@@ -43,3 +43,22 @@ title: Sample Presi
 | 2          | Sage     |
 | 3          | Rosemary |
 | 4          | Thyme    |
+
+---
+
+# Slide 4
+
+### Revealed Section 
+
+- Secret {.reveal}
+- Top Secret
+- Super Top Secret
+
+### Static Section
+
+- You can see this
+- if you want
+- nothing special here
+
+---
+tags: #slides

@@ -7,19 +7,19 @@ export class FooterElement extends HTMLElement {
         <fieldset name="overlay">
             <label>
                 <input type="radio" name="overlay" value="pointer" checked>
-                <img src="/dist/images/pointer.png" alt="Pointer"
+                <img src="/includes/images/pointer.png" alt="Pointer"
             </label>
             <label>
                 <input type="radio" name="overlay" value="brush">
-                <img src="/dist/images/pencil.png" alt="Draw">
+                <img src="/includes/images/pencil.png" alt="Draw">
             </label>
             <label>
                 <input type="radio" name="overlay" value="eraser">
-                <img src="/dist/images/eraser.png" alt="Erase">
+                <img src="/includes/images/eraser.png" alt="Erase">
             </label>
             <label>
                 <input type="radio" name="overlay" value="hidden">
-                <img src="/dist/images/hide.png" alt="Hide">
+                <img src="/includes/images/hide.png" alt="Hide">
             </label>
         </fieldset>
         <span>

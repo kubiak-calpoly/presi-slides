@@ -3,6 +3,8 @@ import { html } from "@unbndl/html";
 const MIN_INTERSECTION = 0.4;
 const MAX_INTERSECTION = 0.8;
 
+let params = new URLSearchParams(document.location.search);
+
 export class PresiElement extends HTMLElement {
   VIEW_ELEMENT = "slide-view";
   FOOTER_ELEMENT = "slide-footer";
@@ -52,6 +54,9 @@ export class PresiElement extends HTMLElement {
     this.addEventListener("slide:overlay", (ev) => {
       this.manageOverlay(ev.detail);
     });
+
+    if (params.get("reveal"))
+      this.classList.add("reveal-all");
   }
 
   slide(n) {

@@ -1,4 +1,4 @@
-import { html, css, shadow } from "@unbndl/html";
+import { Events, html, css, shadow } from "@unbndl/html";
 import Konva from 'konva';
 
 
@@ -24,17 +24,17 @@ export class SlideElement extends HTMLElement {
       }
       :host([active]) {
         --slide-opacity: 1;
-        cursor: url("/dist/images/pointer.png") 0 0, pointer;
+        cursor: url("/includes/images/pointer.png") 0 0, pointer;
       }
       :host([overlay="hidden"]) {
         --slide-overlay-visibility: hidden;
       }
       :host([overlay="brush"]) {
-          cursor: url("/dist/images/pencil.png") 0 100, crosshair;
+          cursor: url("/includes/images/pencil.png") 0 100, crosshair;
         --slide-pointer-events: auto;
       }
       :host([overlay="eraser"]) {
-          cursor: url("/dist/images/eraser.png") 35 100, not-allowed;
+          cursor: url("/includes/images/eraser.png") 35 100, not-allowed;
         --slide-pointer-events: auto;
       }
       #overlay {
@@ -62,6 +62,26 @@ export class SlideElement extends HTMLElement {
     shadow(this)
       .template(SlideElement.template)
       .styles(SlideElement.styles);
+
+    Events.delegate(this, ".reveal", {
+      click: (ev) => {
+        const target = ev.target;
+        if (target) {
+          const next = target.nextElementSibling;
+          if (next) next.classList.add("reveal");
+          target.classList.remove("reveal");
+        }
+      }
+    });
+
+    Events.delegate(this, ".reveal ~ :not(.reveal)", {
+      click: (ev) => {
+        const target = ev.target;
+        if (target) {
+          target.classList.add("reveal-one");
+        }
+      }
+    });
   }
 
   static observedAttributes = ["active", "overlay"];

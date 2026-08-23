@@ -10,19 +10,16 @@
     --color-link: var(--color-accent);
     --color-text: rgb(51 51 51);
     --color-text-heading: var(--color-accent);
-    --color-text-inverted:#12B0FB;
+    --color-text-inverted: #12b0fb;
     --color-warning: #ce2929;
     --color-error: var(--color-warning);
 
     --font-family-display:
-        Pridi, Georgia, Cambria, "Noto Serif",
-        "Bitstream Charter", serif;
+        Pridi, Georgia, Cambria, "Noto Serif", "Bitstream Charter", serif;
     --font-family-body:
-        "Merriweather Sans", Calibri, Roboto, "Segoe UI",
-        Ubuntu, sans-serif;
+        "Merriweather Sans", Calibri, Roboto, "Segoe UI", Ubuntu, sans-serif;
     --font-family-code:
-        Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
-        monospace;
+        Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
 
     --font-line-height-body: 1.375;
     --font-line-height-compact: 1.125;
@@ -48,8 +45,7 @@
     --slide-aspect-ratio: 1.778;
     --slide-nominal-width: 1080;
     --slide-nominal-height: calc(
-        var(--slide-nominal-width) /
-            calc(var(--slide-aspect-ratio))
+        var(--slide-nominal-width) / calc(var(--slide-aspect-ratio))
     );
 
     --slide-base-measure: 36;
@@ -115,8 +111,7 @@ li + li {
 blockquote {
     width: 80%;
     margin: var(--size-spacing-large) auto;
-    border-left: var(--weight-line-heavy) solid
-        var(--color-accent);
+    border-left: var(--weight-line-heavy) solid var(--color-accent);
     padding-left: var(--size-spacing-large);
     font-size: 125%;
 
@@ -153,12 +148,10 @@ p.note {
         height: var(--size-spacing-large);
     }
     &::before {
-        border-top: var(--weight-line-hairline) solid
-            currentColor;
+        border-top: var(--weight-line-hairline) solid currentColor;
     }
     &::after {
-        border-bottom: var(--weight-line-hairline) solid
-            currentColor;
+        border-bottom: var(--weight-line-hairline) solid currentColor;
     }
 }
 
@@ -204,7 +197,6 @@ slide-presi {
     --scale: 1;
 }
 
-
 slide-footer {
     position: fixed;
     z-index: 0;
@@ -227,8 +219,8 @@ slide-view {
     --grid-header-row: ;
     --grid-content-rows: minmax(min-content, 1fr);
     --grid-last-row: ;
-    --grid-template-rows: var(--grid-header-row)
-        var(--grid-content-rows) var(--grid-last-row);
+    --grid-template-rows: var(--grid-header-row) var(--grid-content-rows)
+        var(--grid-last-row);
     --grid-auto-rows: minmax(min-content, auto);
 
     display: grid;
@@ -292,11 +284,12 @@ slide-view {
         font-size: 125%;
     }
 
+    /* code blocks */
+
     pre[class*="language-"] {
         --code-font-size: calc(
             1px * var(--scale, 1) * var(--code-scaling) *
-                var(--slide-nominal-width) /
-                var(--slide-code-measure)
+                var(--slide-nominal-width) / var(--slide-code-measure)
         );
         font-size: var(--code-font-size, 1em);
         line-height: 1.25;
@@ -409,16 +402,12 @@ slide-view {
         height: fit-content;
 
         &:has(th.compact) {
-            font-size: calc(
-                0.875 * var(--slide-base-font-size, 1em)
-            );
+            font-size: calc(0.875 * var(--slide-base-font-size, 1em));
             line-height: 1;
         }
 
         &:has(th.tiny) {
-            font-size: calc(
-                0.75 * var(--slide-base-font-size, 1em)
-            );
+            font-size: calc(0.75 * var(--slide-base-font-size, 1em));
             line-height: 1;
         }
 
@@ -426,8 +415,7 @@ slide-view {
             font-family: var(--font-family-display);
             line-height: 1.125;
             vertical-align: bottom;
-            border-bottom: var(--weight-line-heavy) solid
-                var(--color-accent);
+            border-bottom: var(--weight-line-heavy) solid var(--color-accent);
             padding: 0 var(--size-spacing-small);
         }
 
@@ -449,8 +437,7 @@ slide-view {
             }
 
             &[colspan] {
-                border: var(--weight-line-medium) solid
-                    var(--color-accent);
+                border: var(--weight-line-medium) solid var(--color-accent);
             }
 
             &:has(img:first-child:last-child) {
@@ -482,8 +469,7 @@ slide-view {
         width: fit-content;
         padding: var(--size-spacing-medium);
         border-radius: var(--size-spacing-medium);
-        border: var(--weight-line-heavy) solid
-            var(--color-warning);
+        border: var(--weight-line-heavy) solid var(--color-warning);
 
         &::before {
             display: inline-block;
@@ -498,18 +484,19 @@ slide-view {
             color: white;
         }
     }
-
-    /*&:not(:first-child)::after {
-        display: block;
-        position: absolute;
-        bottom: var(--size-spacing-large);
-        right: var(--size-spacing-large);
-        content: attr(data-slide-number);
-        font-size: 0.75em;
-        color: var(--color-accent);
-    }*/
 }
 
+/* progressively revealed lists (li.reveal) */
+
+slide-presi:not(.reveal-all) {
+    li.reveal {
+        &:not(.reveal-one),
+        & ~ li:not(.reveal-one) {
+            color: transparent;
+            border: 1px solid #ccc;
+        }
+    }
+}
 
 @media screen {
     body {
@@ -518,21 +505,18 @@ slide-view {
 
     slide-presi {
         --wscale: calc(
-            var(--viewport-width, 1080) /
-                var(--slide-nominal-width)
+            var(--viewport-width, 1080) / var(--slide-nominal-width)
         );
 
         --hscale: calc(
-            var(--viewport-height, 792) /
-                var(--slide-nominal-height)
+            var(--viewport-height, 792) / var(--slide-nominal-height)
         );
 
         --scale: min(var(--wscale), var(--hscale));
 
         --slide-margin-vertical: calc(
             (
-                    var(--viewport-height) -
-                        var(--slide-nominal-height) *
+                    var(--viewport-height) - var(--slide-nominal-height) *
                         var(--scale, 1)
                 ) *
                 0.5px
@@ -540,8 +524,7 @@ slide-view {
 
         --slide-margin-horizontal: calc(
             (
-                    var(--viewport-width) -
-                        var(--slide-nominal-width) *
+                    var(--viewport-width) - var(--slide-nominal-width) *
                         var(--scale, 1)
                 ) *
                 0.5px
@@ -549,8 +532,7 @@ slide-view {
         background-color: var(--color-backdrop);
         height: 100vh;
         width: 100vw;
-        padding: var(--slide-margin-vertical)
-            var(--slide-margin-horizontal);
+        padding: var(--slide-margin-vertical) var(--slide-margin-horizontal);
         gap: calc(2 * var(--slide-margin-vertical));
         overflow: hidden scroll;
         scroll-snap-type: y mandatory;
@@ -564,8 +546,6 @@ slide-view {
         position: relative;
     }
 }
-
-
 
 @media print {
     /*@page slide {
@@ -597,8 +577,8 @@ slide-view:not(:has(h1[layout])) {
     --slide-header-template: /* empty */;
     --slide-body-template: "b b b b b b b b b b b b";
     --slide-footer-template: /* empty */;
-    --grid-template: var(--slide-header-template)
-        var(--slide-body-template) var(--slide-footer-template);
+    --grid-template: var(--slide-header-template) var(--slide-body-template)
+        var(--slide-footer-template);
 
     --grid-content-rows: minmax(75%, 1fr);
 
@@ -630,12 +610,7 @@ slide-view:not(:has(h1[layout])) {
             table:not(:has(.full)),
             blockquote,
             .question,
-            p:not(
-                :has(> img:only-child),
-                .note,
-                .warning,
-                .footer
-            )
+            p:not(:has(> img:only-child), .note, .warning, .footer)
         ) {
         grid-area: b;
     }
@@ -691,12 +666,7 @@ slide-view:not(:has(h1[layout])) {
 
     /* initial <aside> */
 
-    &:has(
-        > aside:where(
-                first-child,
-                :is(h1, header):first-of-type + *
-            )
-    ) {
+    &:has(> aside:where(first-child, :is(h1, header):first-of-type + *)) {
         --slide-body-template: var(--slide-aside-template);
         --slide-aside-template: "b b b b   b b b b   a a a a";
 
@@ -713,13 +683,7 @@ slide-view:not(:has(h1[layout])) {
             &:has(> :only-child) {
                 display: contents;
             }
-            > :is(
-                ul,
-                ol,
-                pre,
-                blockquote,
-                p:not(:has(> img:only-child))
-            ) {
+            > :is(ul, ol, pre, blockquote, p:not(:has(> img:only-child))) {
                 grid-area: a;
             }
             > p:only-child > img:only-child {
@@ -728,14 +692,7 @@ slide-view:not(:has(h1[layout])) {
         }
 
         > aside
-            + :is(
-                ul,
-                ol,
-                p:not(:has(> img:only-child)),
-                dl,
-                .dl,
-                .question
-            ) {
+            + :is(ul, ol, p:not(:has(> img:only-child)), dl, .dl, .question) {
             grid-area: b;
         }
 
@@ -767,8 +724,7 @@ slide-view:not(:has(h1[layout])) {
 
             &:has(aside + pre) {
                 --slide-aside-template: "c c c c   c c c c   a a a a";
-                --grid-content-rows: auto
-                    minmax(min-content, 1fr);
+                --grid-content-rows: auto minmax(min-content, 1fr);
             }
         }
 
@@ -798,50 +754,26 @@ slide-view:not(:has(h1[layout])) {
     /* initial image */
 
     &:has(
-        > p:where(
-                :first-child,
-                :is(h1, header, aside):first-of-type + *
-            )
+        > p:where(:first-child, :is(h1, header, aside):first-of-type + *)
             > img:only-child
     ) {
         --slide-body-template: "b b b b b b   i i i i i i";
 
         &:has(
-            > p:where(
-                    :only-child,
-                    :is(h1, header):first-of-type + :last-child
-                ),
-            > p:where(
-                    :first-child,
-                    :is(h1, header):first-of-type + *
-                )
+            > p:where(:only-child, :is(h1, header):first-of-type + :last-child),
+            > p:where(:first-child, :is(h1, header):first-of-type + *)
                 + p
                 > img:only-child,
-            > p:where(
-                    :first-child,
-                    :is(h1, header):first-of-type + *
-                )
+            > p:where(:first-child, :is(h1, header):first-of-type + *)
                 + :is(footer, .footer, .note)
         ) {
             --slide-body-template: "i i i i   i i i i   i i i i";
         }
 
         &:has(
-            p:where(
-                    :first-child,
-                    :is(h1, header):first-of-type + *
-                )
+            p:where(:first-child, :is(h1, header):first-of-type + *)
                 + *:where(
-                    :not(
-                        h3,
-                        p,
-                        blockquote,
-                        dl,
-                        table,
-                        footer,
-                        .footer,
-                        .note
-                    )
+                    :not(h3, p, blockquote, dl, table, footer, .footer, .note)
                 )
         ) {
             --slide-header-template: "h h h h  h h h h  h h h h";
@@ -849,24 +781,17 @@ slide-view:not(:has(h1[layout])) {
         }
 
         &:has(
-            p:where(
-                    :first-child,
-                    :is(h1, header):first-of-type + *
-                )
+            p:where(:first-child, :is(h1, header):first-of-type + *)
                 + *:where(ul, ol)
                 + pre
         ) {
             --slide-body-template: "b b b b b b   i i i i i i"
                 "c c c c   c c c c   c c c c";
-            --grid-content-rows: minmax(auto, 1fr)
-                minmax(min-content, 1fr);
+            --grid-content-rows: minmax(auto, 1fr) minmax(min-content, 1fr);
         }
 
         &:has(
-            p:where(
-                    :first-child,
-                    :is(h1, header):first-of-type + *
-                )
+            p:where(:first-child, :is(h1, header):first-of-type + *)
                 + :where(blockquote, table, .full)
         ) {
             --slide-header-template: "h h h h   i i i i   i i i i";
@@ -874,13 +799,7 @@ slide-view:not(:has(h1[layout])) {
                 "b b b b   b b b b   b b b b";
         }
 
-        &:has(
-            p:where(
-                    :first-child,
-                    :is(h1, header):first-of-type + *
-                )
-                + pre
-        ) {
+        &:has(p:where(:first-child, :is(h1, header):first-of-type + *) + pre) {
             --slide-header-template: "h h h h   i i i i   i i i i";
             --slide-body-template: "h h h h   i i i i   i i i i"
                 "c c c c   c c c c   c c c c";
@@ -890,21 +809,12 @@ slide-view:not(:has(h1[layout])) {
     /* initial video */
 
     &:has(
-        > p:where(
-                :first-child,
-                :is(h1, header):first-of-type + *
-            )
+        > p:where(:first-child, :is(h1, header):first-of-type + *)
             > video:only-child
     ) {
         --slide-body-template: "b b b b  v v v v   v v v v";
 
-        &:has(
-            p:where(
-                    :first-child,
-                    :is(h1, header):first-of-type + *
-                )
-                + pre
-        ) {
+        &:has(p:where(:first-child, :is(h1, header):first-of-type + *) + pre) {
             --slide-body-template: "c c c c c c   v v v v v v";
         }
     }
@@ -912,26 +822,26 @@ slide-view:not(:has(h1[layout])) {
     /* * + image */
 
     &:has(
-        > *:where(
-                :first-child,
-                :is(h1, header):first-of-type + *
-            ):not(h1, h3, .full, table, dl, blockquote, aside)
+        > *:where(:first-child, :is(h1, header):first-of-type + *):not(
+                h1,
+                h3,
+                .full,
+                table,
+                dl,
+                blockquote,
+                aside
+            )
             + p
             > img:only-child
     ) {
         --slide-body-template: "b b b b b b   i i i i i i";
 
         /* code + image */
-        &:has(
-            pre:first-child,
-            :is(h1, header):first-of-type + pre
-        ) {
+        &:has(pre:first-child, :is(h1, header):first-of-type + pre) {
             --slide-body-template: "c c c c c c   i i i i i i";
 
             /* code + image + * */
-            &:has(pre + p + :is(ul, ol, dl)):has(
-                    pre + p > img:only-child
-                ) {
+            &:has(pre + p + :is(ul, ol, dl)):has(pre + p > img:only-child) {
                 --slide-body-template: "b b b b b b   i i i i i i"
                     "b b b b b b   c c c c c c";
                 --grid-content-rows: minmax(min-content, auto)
@@ -945,17 +855,10 @@ slide-view:not(:has(h1[layout])) {
     }
 
     /* initial code */
-    &:has(
-        > pre:where(
-                :first-child,
-                :is(h1, header):first-of-type + *
-            )
-    ) {
+    &:has(> pre:where(:first-child, :is(h1, header):first-of-type + *)) {
         --slide-body-template: "c c c c c c c c c c c c";
 
-        &:has(
-            pre + :is(blockquote, table, .full, .note, footer)
-        ) {
+        &:has(pre + :is(blockquote, table, .full, .note, footer)) {
             --slide-body-template: "c c c c c c c c c c c c"
                 "b b b b b b b b b b b b";
             --grid-content-rows: min-content fit-content;
@@ -994,27 +897,19 @@ slide-view:not(:has(h1[layout])) {
         --slide-image-template: ;
         --slide-titles-template: "t t t t t t   t2 t2 t2 t2 t2 t2";
         --slide-body-template: var(--slide-titles-template)
-            var(--slide-code-template)
-            var(--slide-list-template)
+            var(--slide-code-template) var(--slide-list-template)
             var(--slide-image-template);
         --grid-content-rows: min-content minmax(20%, 1fr);
 
         &:has(
             > h3 + p > img:only-child:not(.full),
             > h3 + :not(h3) + p > img:only-child:not(.full),
-            > h3
-                + :not(h3)
-                + :not(h3)
-                + p
-                > img:only-child:not(.full)
+            > h3 + :not(h3) + :not(h3) + p > img:only-child:not(.full)
         ) {
             --slide-image-template: "i i i i i i  i2 i2 i2 i2 i2 i2";
         }
 
-        &:has(
-            > h3 + :is(ol, ul, table),
-            > h3 + pre + :is(ol, ul, table)
-        ) {
+        &:has(> h3 + :is(ol, ul, table), > h3 + pre + :is(ol, ul, table)) {
             --slide-list-template: "b b b b b b b2 b2 b2 b2 b2 b2";
         }
 
@@ -1046,23 +941,13 @@ slide-view:not(:has(h1[layout])) {
                     ol,
                     ul,
                     table,
-                    p:not(
-                        .note,
-                        .footer,
-                        :has(> img:only-child)
-                    )
+                    p:not(.note, .footer, :has(> img:only-child))
                 ) {
                     grid-area: b;
                 }
             }
             &,
-            &
-                + :is(
-                    ol,
-                    ul,
-                    table,
-                    p:not(:has(> img:only-child))
-                ) {
+            & + :is(ol, ul, table, p:not(:has(> img:only-child))) {
                 + pre {
                     grid-area: c;
                 }
@@ -1072,8 +957,7 @@ slide-view:not(:has(h1[layout])) {
         /* side-by-side w/images in each stack */
 
         &:has(> h3 + * + p:not(.full) > img:only-child) {
-            --grid-content-rows: min-content auto
-                minmax(50%, 1fr);
+            --grid-content-rows: min-content auto minmax(50%, 1fr);
             --slide-image-template: "i i i i   i i i2 i2   i2 i2 i2 i2";
         }
         &:has(> h3 + p:not(.full) > img:only-child) {
@@ -1086,21 +970,15 @@ slide-view:not(:has(h1[layout])) {
 
         /* code + side-by-side */
 
-        &:has(
-            > :is(pre:first-child, h1:first-child + pre) + h3
-        ) {
+        &:has(> :is(pre:first-child, h1:first-child + pre) + h3) {
             --slide-code-template: "c c c c c c c c c c c c";
-            --grid-content-rows: min-content min-content
-                minmax(50%, 1fr);
+            --grid-content-rows: min-content min-content minmax(50%, 1fr);
         }
 
         /* image + side-by-side */
 
         &:has(
-            > p:where(
-                    :first-child,
-                    :is(h1, header):first-of-type + *
-                )
+            > p:where(:first-child, :is(h1, header):first-of-type + *)
                 > img:only-child
         ) {
             --slide-header-template: "h h h h   i i i i   i i i i";
@@ -1156,25 +1034,17 @@ slide-view:not(:has(h1[layout])) {
 
     &:has(h3:nth-of-type(3)) {
         --slide-body-template: "t t t t    t2 t2 t2 t2    t3 t3 t3 t3"
-            var(--slide-code-template)
-            var(--slide-list-template)
+            var(--slide-code-template) var(--slide-list-template)
             var(--slide-image-template);
         &:has(
             > h3 + p:not(.full) > img:only-child,
             > h3 + :not(h3) + p:not(.full) > img:only-child,
-            > h3
-                + :not(h3)
-                + :not(h3)
-                + p:not(.full)
-                > img:only-child
+            > h3 + :not(h3) + :not(h3) + p:not(.full) > img:only-child
         ) {
             --slide-image-template: "i i i i   i2 i2 i2 i2   i3 i3 i3 i3";
         }
 
-        &:has(
-            > h3 + :is(ol, ul, table),
-            > h3 + pre + :is(ol, ul, table)
-        ) {
+        &:has(> h3 + :is(ol, ul, table), > h3 + pre + :is(ol, ul, table)) {
             --slide-list-template: "b b b b   b2 b2 b2 b2   b3 b3 b3 b3";
         }
 
@@ -1218,33 +1088,23 @@ slide-view:not(:has(h1[layout])) {
         --slide-code-template-2: ;
         --slide-image-template-2: ;
         --slide-body-template: "t t t t t t    t2 t2 t2 t2 t2 t2"
-            var(--slide-code-template)
-            var(--slide-list-template)
-            var(--slide-image-template)
-            "t3 t3 t3 t3 t3 t3   t4 t4 t4 t4 t4 t4"
-            var(--slide-code-template-2)
-            var(--slide-list-template-2)
+            var(--slide-code-template) var(--slide-list-template)
+            var(--slide-image-template) "t3 t3 t3 t3 t3 t3   t4 t4 t4 t4 t4 t4"
+            var(--slide-code-template-2) var(--slide-list-template-2)
             var(--slide-image-template-2);
-        --grid-content-rows: min-content minmax(0, 1fr)
-            min-content minmax(0, 1fr);
+        --grid-content-rows: min-content minmax(0, 1fr) min-content
+            minmax(0, 1fr);
 
         &:has(
             > h3 + p > img:only-child:not(.full),
             > h3 + :not(h3) + p > img:only-child:not(.full),
-            > h3
-                + :not(h3)
-                + :not(h3)
-                + p
-                > img:only-child:not(.full)
+            > h3 + :not(h3) + :not(h3) + p > img:only-child:not(.full)
         ) {
             --slide-image-template: "i i i i i i    i2 i2 i2 i2 i2 i2";
             --slide-image-template-2: "i3 i3 i3 i3 i3 i3   i4 i4 i4 i4 i4 i4";
         }
 
-        &:has(
-            > h3 + :is(ol, ul, table),
-            > h3 + pre + :is(ol, ul, table)
-        ) {
+        &:has(> h3 + :is(ol, ul, table), > h3 + pre + :is(ol, ul, table)) {
             --slide-list-template: "b b b b b b    b2 b2 b2 b2 b2 b2";
             --slide-list-template-2: "b3 b3 b3 b3 b3 b3   b4 b4 b4 b4 b4 b4";
         }
@@ -1255,9 +1115,8 @@ slide-view:not(:has(h1[layout])) {
         }
 
         &:has(> h3 + * + p > img:only-child) {
-            --grid-content-rows: min-content auto
-                minmax(8em, 1fr) min-content auto
-                minmax(8em, 1fr);
+            --grid-content-rows: min-content auto minmax(8em, 1fr) min-content
+                auto minmax(8em, 1fr);
         }
     }
 
@@ -1291,31 +1150,22 @@ slide-view:not(:has(h1[layout])) {
 
     &:has(h3:nth-of-type(5)) {
         --slide-body-template: "t t t t t t  t2 t2 t2 t2 t2 t2"
-            var(--slide-code-template)
-            var(--slide-list-template)
+            var(--slide-code-template) var(--slide-list-template)
             var(--slide-image-template)
             "t3 t3 t3 t3   t4 t4 t4 t4    t5 t5 t5 t5"
-            var(--slide-code-template-2)
-            var(--slide-list-template-2)
+            var(--slide-code-template-2) var(--slide-list-template-2)
             var(--slide-image-template-2);
 
         &:has(
             > h3 + p > img:only-child:not(.full),
             > h3 + :not(h3) + p > img:only-child:not(.full),
-            > h3
-                + :not(h3)
-                + :not(h3)
-                + p
-                > img:only-child:not(.full)
+            > h3 + :not(h3) + :not(h3) + p > img:only-child:not(.full)
         ) {
             --slide-image-template: "i i i i i i    i2 i2 i2 i2 i2 i2";
             --slide-image-template-2: "i3 i3 i3 i3   i4 i4 i4 i4   i5 i5 i5 i5";
         }
 
-        &:has(
-            > h3 + :is(ol, ul, table),
-            > h3 + pre + :is(ol, ul, table)
-        ) {
+        &:has(> h3 + :is(ol, ul, table), > h3 + pre + :is(ol, ul, table)) {
             --slide-list-template: "b b b b b b    b2 b2 b2 b2 b2 b2";
             --slide-list-template-2: "b3 b3 b3 b3   b4 b4 b4 b4   b5 b5 b5 b5";
         }
@@ -1356,31 +1206,22 @@ slide-view:not(:has(h1[layout])) {
 
     &:has(h3:nth-of-type(6)) {
         --slide-body-template: "t t t t   t2 t2 t2 t2   t3 t3 t3 t3"
-            var(--slide-code-template)
-            var(--slide-list-template)
+            var(--slide-code-template) var(--slide-list-template)
             var(--slide-image-template)
             "t4 t4 t4 t4   t5 t5 t5 t5   t6 t6 t6 t6"
-            var(--slide-code-template-2)
-            var(--slide-list-template-2)
+            var(--slide-code-template-2) var(--slide-list-template-2)
             var(--slide-image-template-2);
 
         &:has(
             > h3 + p:not(.full) > img:only-child,
             > h3 + :not(h3) + p:not(.full) > img:only-child,
-            > h3
-                + :not(h3)
-                + :not(h3)
-                + p:not(.full)
-                > img:only-child
+            > h3 + :not(h3) + :not(h3) + p:not(.full) > img:only-child
         ) {
             --slide-image-template: "i i i i   i2 i2 i2 i2  i3 i3 i3 i3 ";
             --slide-image-template-2: "i4 i4 i4 i4   i5 i5 i5 i5   i6 i6 i6 i6";
         }
 
-        &:has(
-            > h3 + :is(ol, ul, table),
-            > h3 + pre + :is(ol, ul, table)
-        ) {
+        &:has(> h3 + :is(ol, ul, table), > h3 + pre + :is(ol, ul, table)) {
             --slide-list-template: "b b b b   b2 b2 b2 b2   b3 b3 b3 b3";
             --slide-list-template-2: "b4 b4 b4 b4   b5 b5 b5 b5   b6 b6 b6 b6";
         }
@@ -1397,23 +1238,13 @@ slide-view:not(:has(h1[layout])) {
                     ol,
                     ul,
                     table,
-                    p:not(
-                        .note,
-                        .footer,
-                        :has(> img:only-child)
-                    )
+                    p:not(.note, .footer, :has(> img:only-child))
                 ) {
                     grid-area: b6;
                 }
             }
             &,
-            &
-                + :is(
-                    ol,
-                    ul,
-                    table,
-                    p:not(:has(> img:only-child))
-                ) {
+            & + :is(ol, ul, table, p:not(:has(> img:only-child))) {
                 + pre {
                     grid-area: c6;
                 }

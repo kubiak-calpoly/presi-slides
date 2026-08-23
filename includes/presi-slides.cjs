@@ -4,19 +4,19 @@ var e=class extends CustomEvent{constructor(e,t){super(e,{bubbles:!0,cancelable:
         <fieldset name="overlay">
             <label>
                 <input type="radio" name="overlay" value="pointer" checked>
-                <img src="/dist/images/pointer.png" alt="Pointer"
+                <img src="/includes/images/pointer.png" alt="Pointer"
             </label>
             <label>
                 <input type="radio" name="overlay" value="brush">
-                <img src="/dist/images/pencil.png" alt="Draw">
+                <img src="/includes/images/pencil.png" alt="Draw">
             </label>
             <label>
                 <input type="radio" name="overlay" value="eraser">
-                <img src="/dist/images/eraser.png" alt="Erase">
+                <img src="/includes/images/eraser.png" alt="Erase">
             </label>
             <label>
                 <input type="radio" name="overlay" value="hidden">
-                <img src="/dist/images/hide.png" alt="Hide">
+                <img src="/includes/images/hide.png" alt="Hide">
             </label>
         </fieldset>
         <span>
@@ -98,17 +98,17 @@ js: import "konva/skia-backend";
       }
       :host([active]) {
         --slide-opacity: 1;
-        cursor: url("/dist/images/pointer.png") 0 0, pointer;
+        cursor: url("/includes/images/pointer.png") 0 0, pointer;
       }
       :host([overlay="hidden"]) {
         --slide-overlay-visibility: hidden;
       }
       :host([overlay="brush"]) {
-          cursor: url("/dist/images/pencil.png") 0 100, crosshair;
+          cursor: url("/includes/images/pencil.png") 0 100, crosshair;
         --slide-pointer-events: auto;
       }
       :host([overlay="eraser"]) {
-          cursor: url("/dist/images/eraser.png") 50 100, not-allowed;
+          cursor: url("/includes/images/eraser.png") 35 100, not-allowed;
         --slide-pointer-events: auto;
       }
       #overlay {
@@ -122,4 +122,4 @@ js: import "konva/skia-backend";
         transition: opacity 1s;
       }
     }
-  `;isPaint=!1;overlayMode=`pointer`;overlayColor=`red`;stage=null;constructor(){super(),ne(this).template(e.template).styles(e.styles)}static observedAttributes=[`active`,`overlay`];attributeChangedCallback(e,t,n){switch(e){case`overlay`:this.overlayMode=n,this.createOverlay();break;case`color`:this.overlayColor=n}}disconnectedCallback(){this.stage&&delete this.stage}createOverlay(){if(this.stage)return;let e=this.shadowRoot.getElementById(`overlay`);console.log(`Creating overlay if needed`,this.stage),this.stage=new ua.Stage({container:e,width:e?.clientWidth,height:e?.clientHeight}),this.layer=new ua.Layer,this.stage.add(this.layer),this.stage.on(`mousedown touchstart`,e=>{this.isPaint=!0;let t=this.stage.getPointerPosition();console.log(`touchstart`,t),this.lastLine=new ua.Line({stroke:this.overlayColor,strokeWidth:this.overlayMode===`eraser`?20:4,globalCompositeOperation:this.overlayMode===`brush`?`source-over`:`destination-out`,lineCap:`round`,lineJoin:`round`,points:[t.x,t.y,t.x,t.y]}),this.layer.add(this.lastLine)}),this.stage.on(`mouseup touchend`,()=>{this.isPaint=!1,console.log(`touchend`)}),this.stage.on(`mousemove touchmove`,e=>{if(!this.isPaint)return;e.evt.preventDefault();let t=this.stage.getPointerPosition(),n=this.lastLine.points().concat([t.x,t.y]);this.lastLine.points(n)})}},fa=.4,pa=.8,ma=class extends HTMLElement{VIEW_ELEMENT=`slide-view`;FOOTER_ELEMENT=`slide-footer`;controls=null;active=null;observer=new IntersectionObserver(e=>{let t=0,n=null;e.forEach(e=>{if(e.isIntersecting){let r=e.target;e.intersectionRatio<fa?r.removeAttribute(`active`):e.intersectionRatio>t&&(t=e.intersectionRatio,n=r)}}),n&&n!==this.active&&this.setActiveSlide(n)},{threshold:[0,fa,pa,1],delay:300});constructor(){super(),this.addEventListener(`slide:input`,e=>{let{slide:t}=e.detail,n=this.slide(t);this.setActiveSlide(n),this.jumpToSlide(n)}),this.addEventListener(`slide:overlay`,e=>{this.manageOverlay(e.detail)})}slide(e){return Array.from(this.querySelectorAll(this.VIEW_ELEMENT))[e-1]}connectedCallback(){let e=Array.from(this.querySelectorAll(this.VIEW_ELEMENT));this.controls=this.querySelector(this.FOOTER_ELEMENT),e.forEach(e=>this.observer.observe(e))}gotoSlide(e){console.log(`Going to slide`,e),e&&e.scrollIntoView({behavior:`smooth`,block:`center`,inline:`nearest`})}jumpToSlide(e){e&&e.scrollIntoView({block:`center`,inline:`nearest`})}setActiveSlide(e){if(this.active=e,this.active){this.active.setAttribute(`active`,`active`);let t=Array.from(this.querySelectorAll(this.VIEW_ELEMENT)).findIndex(t=>t===e);this.controls&&(this.controls.setAttribute(`slide`,t+1),this.controls.setAttribute(`overlay`,e.getAttribute(`overlay`)||`pointer`))}}manageOverlay(e){let{overlay:t}=e||{};console.log(`Overlay options`,e),this.active&&t&&this.active.setAttribute(`overlay`,t)}};function ha(){window.addEventListener(`resize`,ga),ga()}function ga(){let e=document.body,t=document.documentElement.clientWidth,n=document.documentElement.clientHeight;e.classList.add(`presentation-scaled`),e.style.setProperty(`--viewport-width`,t.toString()),e.style.setProperty(`--viewport-height`,n.toString()),console.log(`Rescaled`,t,n)}c({"slide-presi":ma,"slide-view":da,"slide-footer":T}),ha();
+  `;isPaint=!1;overlayMode=`pointer`;overlayColor=`red`;stage=null;constructor(){super(),ne(this).template(e.template).styles(e.styles),te.delegate(this,`.reveal`,{click:e=>{let t=e.target;if(t){let e=t.nextElementSibling;e&&e.classList.add(`reveal`),t.classList.remove(`reveal`)}}}),te.delegate(this,`.reveal ~ :not(.reveal)`,{click:e=>{let t=e.target;t&&t.classList.add(`reveal-one`)}})}static observedAttributes=[`active`,`overlay`];attributeChangedCallback(e,t,n){switch(e){case`overlay`:this.overlayMode=n,this.createOverlay();break;case`color`:this.overlayColor=n}}disconnectedCallback(){this.stage&&delete this.stage}createOverlay(){if(this.stage)return;let e=this.shadowRoot.getElementById(`overlay`);console.log(`Creating overlay if needed`,this.stage),this.stage=new ua.Stage({container:e,width:e?.clientWidth,height:e?.clientHeight}),this.layer=new ua.Layer,this.stage.add(this.layer),this.stage.on(`mousedown touchstart`,e=>{this.isPaint=!0;let t=this.stage.getPointerPosition();console.log(`touchstart`,t),this.lastLine=new ua.Line({stroke:this.overlayColor,strokeWidth:this.overlayMode===`eraser`?20:4,globalCompositeOperation:this.overlayMode===`brush`?`source-over`:`destination-out`,lineCap:`round`,lineJoin:`round`,points:[t.x,t.y,t.x,t.y]}),this.layer.add(this.lastLine)}),this.stage.on(`mouseup touchend`,()=>{this.isPaint=!1,console.log(`touchend`)}),this.stage.on(`mousemove touchmove`,e=>{if(!this.isPaint)return;e.evt.preventDefault();let t=this.stage.getPointerPosition(),n=this.lastLine.points().concat([t.x,t.y]);this.lastLine.points(n)})}},fa=.4,pa=.8,ma=new URLSearchParams(document.location.search),ha=class extends HTMLElement{VIEW_ELEMENT=`slide-view`;FOOTER_ELEMENT=`slide-footer`;controls=null;active=null;observer=new IntersectionObserver(e=>{let t=0,n=null;e.forEach(e=>{if(e.isIntersecting){let r=e.target;e.intersectionRatio<fa?r.removeAttribute(`active`):e.intersectionRatio>t&&(t=e.intersectionRatio,n=r)}}),n&&n!==this.active&&this.setActiveSlide(n)},{threshold:[0,fa,pa,1],delay:300});constructor(){super(),this.addEventListener(`slide:input`,e=>{let{slide:t}=e.detail,n=this.slide(t);this.setActiveSlide(n),this.jumpToSlide(n)}),this.addEventListener(`slide:overlay`,e=>{this.manageOverlay(e.detail)}),ma.get(`reveal`)&&this.classList.add(`reveal-all`)}slide(e){return Array.from(this.querySelectorAll(this.VIEW_ELEMENT))[e-1]}connectedCallback(){let e=Array.from(this.querySelectorAll(this.VIEW_ELEMENT));this.controls=this.querySelector(this.FOOTER_ELEMENT),e.forEach(e=>this.observer.observe(e))}gotoSlide(e){console.log(`Going to slide`,e),e&&e.scrollIntoView({behavior:`smooth`,block:`center`,inline:`nearest`})}jumpToSlide(e){e&&e.scrollIntoView({block:`center`,inline:`nearest`})}setActiveSlide(e){if(this.active=e,this.active){this.active.setAttribute(`active`,`active`);let t=Array.from(this.querySelectorAll(this.VIEW_ELEMENT)).findIndex(t=>t===e);this.controls&&(this.controls.setAttribute(`slide`,t+1),this.controls.setAttribute(`overlay`,e.getAttribute(`overlay`)||`pointer`))}}manageOverlay(e){let{overlay:t}=e||{};console.log(`Overlay options`,e),this.active&&t&&this.active.setAttribute(`overlay`,t)}};function ga(){window.addEventListener(`resize`,_a),_a()}function _a(){let e=document.body,t=document.documentElement.clientWidth,n=document.documentElement.clientHeight;e.classList.add(`presentation-scaled`),e.style.setProperty(`--viewport-width`,t.toString()),e.style.setProperty(`--viewport-height`,n.toString()),console.log(`Rescaled`,t,n)}c({"slide-presi":ha,"slide-view":da,"slide-footer":T}),ga();
