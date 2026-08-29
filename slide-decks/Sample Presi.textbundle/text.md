@@ -2,7 +2,7 @@
 title: Sample Presi
 ---
 
-# Sample Presi
+# Sample Presi {layout="title"}
 
 ---
 
@@ -59,6 +59,12 @@ title: Sample Presi
 - You can see this
 - if you want
 - nothing special here
+
+---
+# Slide 5
+
+![](assets/image%207.png) {.full}
+
 
 ---
 tags: #slides
