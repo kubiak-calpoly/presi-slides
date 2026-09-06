@@ -129,7 +129,8 @@ blockquote {
 }
 
 p.center,
-td.center {
+td.center,
+code.center {
     text-align: center;
 }
 
@@ -799,6 +800,7 @@ slide-view:not(:has(h1[layout])) {
             --slide-header-template: "h h h h   i i i i   i i i i";
             --slide-body-template: "h h h h   i i i i   i i i i"
                 "b b b b   b b b b   b b b b";
+            --grid-content-rows: minmax(min-content,40%) minmax(60%, 1fr);
         }
 
         &:has(p:where(:first-child, :is(h1, header):first-of-type + *) + pre) {

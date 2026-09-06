@@ -65,6 +65,38 @@ title: Sample Presi
 
 ![](assets/image%207.png) {.full}
 
+---
+# Slide 6 
+
+
+![](assets/image%203.png){.full}
+
+<!-- symmetry between Request and Response -->
+
+|    | Request  | Response |
+| --- | --- | --- |
+| Start | `GET /en-US/docs/… HTTP/1.1` | `HTTP/1.1 404 Not Found` |
+| Headers | `User-Agent: Mozilla/5.0…` | `Content-Type: application/json` |
+| Body | `<!DOCTYPE html> <html lang="en"> … </html>` | `{"squadName": "SuperHeroSquad", …}`  |
+
+---
+
+# Slide 7
+
+<aside>
+
+> Cool URIs don't change {.full}
+> 
+> —Tim Berners-Lee {.attribution}
+
+![](assets/image-timbl.png)
+
+</aside>
+
+- A resource's URL should never change
+- Resource itself may change
+- Physical storage location may change
+  - Client shouldn't care
 
 ---
 tags: #slides
