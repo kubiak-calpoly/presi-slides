@@ -129,7 +129,8 @@ blockquote {
 }
 
 p.center,
-td.center {
+td.center,
+code.center {
     text-align: center;
 }
 
@@ -668,7 +669,7 @@ slide-view:not(:has(h1[layout])) {
 
     /* initial <aside> */
 
-    &:has(> aside:where(first-child, :is(h1, header):first-of-type + *)) {
+    &:has(> aside:where(:first-child, :is(h1, header):first-of-type + *)) {
         --slide-body-template: var(--slide-aside-template);
         --slide-aside-template: "b b b b   b b b b   a a a a";
 
@@ -682,15 +683,13 @@ slide-view:not(:has(h1[layout])) {
 
         > aside {
             grid-area: a;
-            &:has(> :only-child) {
+            &:has(> :only-child, > p:first-child > img:only-child) {
                 display: contents;
             }
             > :is(ul, ol, pre, blockquote, p:not(:has(> img:only-child))) {
                 grid-area: a;
             }
-            > p:only-child > img:only-child {
-                grid-area: i;
-            }
+
         }
 
         > aside
@@ -708,12 +707,26 @@ slide-view:not(:has(h1[layout])) {
 
         /* <aside> containing image */
         &:has(aside > p > img:only-child) {
+            &:has(h1:first-child) {
+                --slide-header-template: "h h h h  h h h h   i i i i";
+            }
+
             --slide-aside-template: "b b b b   b b b b   i i i i"
                 "b b b b   b b b b   a a a a";
+            --grid-content-rows: minmax() minmax(min-content, 1fr);
 
-            > aside:has(p:only-child > img:only-child) {
+            > aside:has(p:first-child > img:only-child) {
                 display: contents;
+
+                > p:first-child {
+                    display: contents;
+                }
+                > p > img:only-child {
+                    grid-area: i;
+                }
+
             }
+
 
             &:has(
                 :is(h1, header):first-of-type

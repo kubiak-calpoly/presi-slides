@@ -85,11 +85,13 @@ title: Sample Presi
 
 <aside>
 
+![](assets/image-timbl.png)
+
 > Cool URIs don't change {.full}
 > 
 > —Tim Berners-Lee {.attribution}
 
-![](assets/image-timbl.png)
+
 
 </aside>
 
