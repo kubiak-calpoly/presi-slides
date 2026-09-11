@@ -101,4 +101,25 @@ title: Sample Presi
   - Client shouldn't care
 
 ---
+
+
+# Slide 7
+
+```HTML {.full}
+<a href="http://example.com/other.html"/>Some other page</a>`
+```
+	
+
+### Syntax
+- `a` is for **A**nchor
+- `href` attribute
+  - value is a URL (as defined by HTTP)
+- Content model: mixed content 
+
+### Semantics
+- creates a hyperlink to web pages, files, email addresses, locations in the same page, or anything else a URL can address
+- Default behavior:
+  - load the referenced resource
+  
+---
 tags: #slides
