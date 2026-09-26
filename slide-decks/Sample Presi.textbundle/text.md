@@ -120,6 +120,17 @@ title: Sample Presi
 - creates a hyperlink to web pages, files, email addresses, locations in the same page, or anything else a URL can address
 - Default behavior:
   - load the referenced resource
-  
+
+---
+# Slide 8
+
+
+> View is a function of Model 
+
+- To modify the view, change the model
+- `render()`  is a function
+- Performance is enhanced by reducing full re-renders
+
+
 ---
 tags: #slides

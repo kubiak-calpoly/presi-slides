@@ -619,8 +619,8 @@ slide-view:not(:has(h1[layout])) {
     }
 
     &
-        > :is(blockquote, ul, ol, dl, table):first-of-type
-        + :is(blockquote, ul, ol, dl, table) {
+        > :is(ul, ol, dl, table):first-of-type
+        + :is(ul, ol, dl, table) {
         grid-area: unset;
         grid-column: start/end;
     }
@@ -903,6 +903,27 @@ slide-view:not(:has(h1[layout])) {
                 + pre
         ):not(:has(pre > .full)) {
         --slide-body-template: "b b b b   b b c c  c c c c";
+    }
+
+    /* initial blockquote */
+
+    &:has(
+        > blockquote:where(
+            :first-child:not(h1, header),
+            :is(h1, header):first-of-type + *
+        )
+        + *:not(h3, .full, .note, footer)
+    ):not(:has(> p.full)) {
+        --slide-body-template: "q q q q q q   b b b b b b";
+
+        > blockquote:first-of-type {
+            grid-area: q;
+            place-self: center;
+
+            + * {
+                place-self: center;
+            }
+        }
     }
 
     /* side-by-side sections (h3) */
