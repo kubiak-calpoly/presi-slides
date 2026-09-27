@@ -738,7 +738,8 @@ slide-view:not(:has(h1[layout])) {
             }
 
             &:has(aside + pre) {
-                --slide-aside-template: "c c c c   c c c c   a a a a";
+                --slide-aside-template: "c c c c   c c c c   i i i i"
+                  "b b b b   b b b b   a a a a";
                 --grid-content-rows: auto minmax(min-content, 1fr);
             }
         }
@@ -953,6 +954,7 @@ slide-view:not(:has(h1[layout])) {
 
         &:has(> h3 + pre) {
             --slide-code-template: "c c c c c c c2 c2 c2 c2 c2 c2";
+            --grid-content-rows: min-content minmax(20%, 1fr) minmax(20%, 1fr);
         }
 
         &:has(> aside ~ h3:nth-of-type(2)) {
