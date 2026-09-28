@@ -954,7 +954,7 @@ slide-view:not(:has(h1[layout])) {
 
         &:has(> h3 + pre) {
             --slide-code-template: "c c c c c c c2 c2 c2 c2 c2 c2";
-            --grid-content-rows: min-content minmax(20%, 1fr) minmax(20%, 1fr);
+            --grid-content-rows: min-content minmax(min-content, 1fr) minmax(20%, 1fr);
         }
 
         &:has(> aside ~ h3:nth-of-type(2)) {
@@ -997,7 +997,7 @@ slide-view:not(:has(h1[layout])) {
         /* side-by-side w/images in each stack */
 
         &:has(> h3 + * + p:not(.full) > img:only-child) {
-            --grid-content-rows: min-content auto minmax(50%, 1fr);
+            --grid-content-rows: min-content auto minmax(min-content, 1fr);
             --slide-image-template: "i i i i   i i i2 i2   i2 i2 i2 i2";
         }
         &:has(> h3 + p:not(.full) > img:only-child) {
@@ -1154,11 +1154,13 @@ slide-view:not(:has(h1[layout])) {
         &:has(> h3 + :is(ol, ul, table), > h3 + pre + :is(ol, ul, table)) {
             --slide-list-template: "b b b b b b    b2 b2 b2 b2 b2 b2";
             --slide-list-template-2: "b3 b3 b3 b3 b3 b3   b4 b4 b4 b4 b4 b4";
+            --grid-content-rows: min-content minmax(min-content, 1fr) min-content minmax(min-content, 1fr);
         }
 
         &:has(> h3 + pre) {
             --slide-code-template: "c c c c c c  c2 c2 c2 c2 c2 c2";
             --slide-code-template-2: "c3 c3 c3 c3 c3 c3   c4 c4 c4 c4 c4 c4";
+            --grid-content-rows: min-content minmax(min-content, 1fr) min-content minmax(min-content, 1fr);
         }
 
         &:has(> h3 + * + p > img:only-child) {
